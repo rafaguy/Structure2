@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <Label FontSize="Micro" HorizontalOptions="End" Grid.Row="0" Grid.Column="1" Text="{Binding Auteur}" TextColor="Black"></Label>
         <Frame Grid.Row="1" OutlineColor="Transparent" HasShadow="False" Grid.Column="1"
-               BackgroundColor="#F5F5F5">
+               BackgroundColor="{Binding Color}">
             <StackLayout>
                 <local:ExtendedLabel TextColor="Black" HorizontalTextAlignment="End" Text="{Binding Text}"></local:ExtendedLabel>
                 <Label FontSize="Micro" HorizontalOptions="End" Text="{Binding Date,StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>

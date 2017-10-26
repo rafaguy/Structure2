@@ -24,13 +24,18 @@ namespace Structure.View
         public  NotificationCommunicationPage()
         {
             InitializeComponent();
-            var task = Task.Run(async()=>this._notification=await getListNotification());
-            task.Wait();
-           
-            UpdateList();
-            
         }
-        
+
+        protected override async void OnAppearing()
+        {
+            activityIndicator.IsVisible = true;
+            activityIndicator.IsRunning = true;
+            // base.OnAppearing();
+            this._notification =await getListNotification();
+            activityIndicator.IsVisible = false;
+            activityIndicator.IsRunning = false;
+            UpdateList();
+        }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
@@ -120,7 +125,7 @@ namespace Structure.View
         private void BtnAddMessage_Clicked(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("OnAddMessageCliked");
-            Navigation.PushAsync(new MessagingPage("Fabrice"));
+            Navigation.PushAsync(new MessagingPage());
             
         }
 
@@ -164,8 +169,20 @@ namespace Structure.View
 
         private void BtnAddMessage_Clicked_1(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MessagingPage("Fabrice"));
+            Navigation.PushAsync(new MessagingPage());
             
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            var stacklayout = (sender as StackLayout);
+            var gestureRec = stacklayout.GestureRecognizers[0] as TapGestureRecognizer;
+            var notification = gestureRec.CommandParameter as Notification;
+            if(notification.index ==1)
+            {
+                Navigation.PushAsync(new MessagingPage(notification));
+            }
+
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Structure
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new AddDocumentPage());
+            MainPage = new NavigationPage(new HomePage());
         }
         public Page CurrentPage
         {

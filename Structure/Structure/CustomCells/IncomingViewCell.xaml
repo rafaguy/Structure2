@@ -14,7 +14,7 @@
           
         </Grid.RowDefinitions>
         <Label FontSize="Micro" Grid.Row="0" Grid.Column="0" Text="{Binding Auteur}" TextColor="Black"></Label>
-        <Frame Grid.Row="1" OutlineColor="Transparent" HasShadow="False" Grid.Column="0" BackgroundColor="White">
+        <Frame Grid.Row="1" OutlineColor="Transparent" HasShadow="False" Grid.Column="0" BackgroundColor="{Binding Color}">
             <StackLayout>
                 <local:ExtendedLabel TextColor="Gray" Text="{Binding Text}" HorizontalOptions="Start"></local:ExtendedLabel>
 

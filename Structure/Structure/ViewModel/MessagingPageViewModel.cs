@@ -128,7 +128,7 @@ namespace Structure.ViewModel
             }
             catch(Exception e)
             {
-                var message1 = e.Message;
+               
                
             }
            
