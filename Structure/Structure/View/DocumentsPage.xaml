@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:Structure.ViewModel;assembly=Structure"
+             xmlns:local="clr-namespace:Structure.Extensions"
+             x:Class="Structure.View.DocumentsPage"
+             BackgroundColor="White"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="TheDocumentsPage"
+             >
+
+    
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+                    iOS="0,20,0,0">
+        </OnPlatform>
+    </ContentPage.Padding>
+ 
+    <ContentPage.Content >
+        <AbsoluteLayout>
+            <StackLayout x:Name="MainContent">
+            <!--Header-->
+            <Image
+                       HeightRequest="70"
+                        x:Name="logo"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Aspect="AspectFit"
+                        Source="header.png"
+                    />
+            <!--Header End-->
+            <StackLayout BackgroundColor="{StaticResource GrayBackground}" Margin="0,10,0,0">
+                <Label  x:Name="LblDocumentTitle" Text="DOCUMENTS" HorizontalOptions="CenterAndExpand"/>
+                <ScrollView>
+                        <StackLayout  Margin="10,0,10,0" >
+                            <ListView BackgroundColor="White" x:Name="LstDocs" ItemSelected="LstDocs_ItemSelected" IsGroupingEnabled="True" ItemsSource="{Binding Categories}">
+                            <ListView.GroupHeaderTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ContentView Padding="10,0,0,0">
+                                            <Grid>
+                                                <Label Text="{Binding Key.Category}" VerticalOptions="Center"
+										           Grid.Column="0" Grid.Row="0"
+                                                   />
+                                                <Image 
+                                               Source="LblArrow.png"
+                                               Grid.Row="0"
+                                               Grid.Column="1"
+                                               HorizontalOptions="End"
+                                               />
+                                            </Grid>
+
+                                            <ContentView.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference TheDocumentsPage}, Path=BindingContext.HeaderSelectedCommand}" CommandParameter="{Binding .}"/>
+                                            </ContentView.GestureRecognizers>
+                                        </ContentView>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.GroupHeaderTemplate>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        </StackLayout>
+                </ScrollView>
+
+                <StackLayout  Margin="10,0,10,10" BackgroundColor="White" >
+                    <Button  x:Name="BtnAddDoc" 
+                         HorizontalOptions="CenterAndExpand"
+                         ContentLayout="Left,2" 
+                         BackgroundColor="White"
+                         Image="AddDoc.png" 
+                         Text="ADD A DOCUMENT" 
+                          Clicked="AddDocument_Clicked"
+                         TextColor="{StaticResource RedTextColor}"  />
+                </StackLayout>
+
+            </StackLayout>
+
+            <!--Footer Starts-->
+
+            <AbsoluteLayout HeightRequest="75" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"   >
+                <StackLayout x:Name="Navi" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="All">
+                    <Grid VerticalOptions="EndAndExpand" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="2"/>
+                        </Grid.RowDefinitions>
+                        <BoxView x:Name="SelectedMenu" BackgroundColor="{StaticResource RedTextColor}"
+                                     Grid.Column="0" Grid.Row="1"
+                                     />
+
+                        <Button 
+                        x:Name="BtnDoc"
+                        Image="Document_Selected.png"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        BorderColor="White"
+                        Clicked="BtnDoc_Clicked"
+                                        />
+                        <Button x:Name="BtnComm"
+                            Image="Chat.png"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnComm_Clicked"
+                                        />
+                        <Button x:Name="BtnHelp"
+                            Image="I.png"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnHelp_Clicked"
+                            />
+                        <Button x:Name="BtnConfig"
+                            Image="Gear.png"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnConfig_Clicked"
+                            />
+                    </Grid>
+
+                </StackLayout>
+                <StackLayout 
+                VerticalOptions="End"
+                 Margin="0,0,0,10"
+                  AbsoluteLayout.LayoutBounds="0.5,1"
+                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                >
+                    <Button 
+                    x:Name="BtnHome"
+                    BackgroundColor="White"
+                    Image="Home.png"
+                    BorderRadius="50"
+                    HeightRequest="100"
+                    BorderWidth="1"
+                    MinimumHeightRequest="100"
+                    WidthRequest="100"
+                    MinimumWidthRequest="100"
+                    Clicked="BtnHome_Clicked"
+                 
+                    
+                    />
+                </StackLayout>
+
+            </AbsoluteLayout >
+           
+
+            <!--Footer End-->
+            </StackLayout>
+            <ActivityIndicator
+                    x:Name="ActivityLayout"
+                    IsVisible="False"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    HorizontalOptions="CenterAndExpand"
+                />
+
+
+        </AbsoluteLayout>
+        
+    </ContentPage.Content>
+
+</ContentPage>

@@ -1,0 +1,9 @@
+packages/*
+Structure/Structure/bin/*
+Structure/Structure/obj/*
+Structure/Structure.Android/bin/*
+Structure/Structure.Android/obj/*
+Structure/Structure.iOS/bin/*
+Structure/Structure.iOS/obj/*
+
+

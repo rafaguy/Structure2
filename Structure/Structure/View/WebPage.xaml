@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Structure.Extensions"
+             x:Class="Structure.View.WebPage">
+    <StackLayout>
+        <StackLayout Orientation="Horizontal" Padding="10,10">
+            <Button Text="Back" HorizontalOptions="StartAndExpand" Clicked="BackClicked" />
+            <Button Text="Forward" HorizontalOptions="End" Clicked="ForwardClicked" />
+        </StackLayout>
+        <local:WebViewExtended x:Name="Browser" Source="https://m.facebook.com"  WidthRequest="1000" HeightRequest="1000" />
+        <Image x:Name="image"></Image>
+        <!--Footer-->
+        <Button Text="Testtest" BackgroundColor="Red"></Button>
+        <AbsoluteLayout VerticalOptions="EndAndExpand" >
+            <StackLayout BackgroundColor="Transparent" Margin="0,20,0,0" AbsoluteLayout.LayoutBounds="0,0.9,1,1" AbsoluteLayout.LayoutFlags="All">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button 
+                        x:Name="BtnDoc"
+                        Image="Document.png"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        BorderColor="White"
+                        Clicked="BtnDoc_Clicked"
+                        HeightRequest="30"
+                        WidthRequest="30"
+                        />
+                    <Button x:Name="BtnComm"
+                            Image="Chat.png"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnComm_Clicked"
+                            HeightRequest="30"
+                            WidthRequest="30"
+                            />
+                    <Button x:Name="BtnHelp"
+                            Image="I.png"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnHelp_Clicked"
+                            HeightRequest="30"
+                            WidthRequest="30"/>
+
+                    <Button x:Name="BtnConfig"
+                            Image="Gear.png"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnConfig_Clicked"
+                            HeightRequest="30"
+                            WidthRequest="30"
+                            />
+                </Grid>
+
+            </StackLayout>
+            <Button 
+                x:Name="BtnHome"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                AbsoluteLayout.LayoutBounds="0.5,0,60,40"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                Image="Home.png"
+                BorderRadius="10"
+                Clicked="BtnHome_Clicked"
+                HeightRequest="30"
+                WidthRequest="30"
+            />
+        </AbsoluteLayout >
+        <!--Footer End-->
+    </StackLayout>
+</ContentPage>

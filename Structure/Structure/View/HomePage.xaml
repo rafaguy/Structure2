@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Structure.Utils"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="White"
+             x:Class="Structure.View.HomePage">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+                    iOS="0,20,0,0">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content >
+        <StackLayout>
+            <!--Header-->
+            <Image
+                       HeightRequest="70"
+                        x:Name="logo"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Aspect="AspectFit"
+                        Source="header.png"
+                    />
+            <!--Header End-->
+            
+            <WebView  Source="https://www.google.com" HeightRequest="500">
+
+            </WebView>
+            <!--Footer Starts-->
+
+            <AbsoluteLayout HeightRequest="75" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"   >
+                <StackLayout x:Name="Navi" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="All">
+                    <Grid VerticalOptions="EndAndExpand" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="2"/>
+                        </Grid.RowDefinitions>
+                       
+                        <Button 
+                        x:Name="BtnDoc"
+                        Image="Document.png"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        BorderColor="White"
+                        Clicked="BtnDoc_Clicked"
+                                        />
+                        <Button x:Name="BtnComm"
+                            Image="Chat.png"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnComm_Clicked"
+                                        />
+                        <Button x:Name="BtnHelp"
+                            Image="I.png"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnHelp_Clicked"
+                            />
+                        <Button x:Name="BtnConfig"
+                            Image="Gear.png"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnConfig_Clicked"
+                            />
+                    </Grid>
+
+                </StackLayout>
+                <StackLayout 
+                VerticalOptions="End"
+                 Margin="0,0,0,10"
+                  AbsoluteLayout.LayoutBounds="0.5,1"
+                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                >
+                    <Button 
+                    x:Name="BtnHome"
+                    BackgroundColor="White"
+                    Image="Home_Selected.png"
+                    BorderRadius="50"
+                    HeightRequest="100"
+                    BorderWidth="1"
+                    MinimumHeightRequest="100"
+                    WidthRequest="100"
+                    MinimumWidthRequest="100"
+                    Clicked="BtnHome_Clicked"
+                 
+                    
+                    />
+                </StackLayout>
+
+            </AbsoluteLayout >
+            <!--Footer End-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

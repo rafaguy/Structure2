@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Structure.Utils"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="Structure.View.ConfigurationPage">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" />
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="ConfigurationPageLayout" BackgroundColor="White">
+            <StackLayout x:Name="MainContent"  >
+                <!--Header-->
+                   <Image
+                       HeightRequest="70"
+                        x:Name="logo"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Aspect="AspectFit"
+                        Source="header.png"
+                    />
+
+
+                    <!--Header End-->
+                <StackLayout>
+                    <Label
+                    x:Name="LblConfig"
+                    FontAttributes="Bold"
+                    FontSize="13"
+                    HorizontalTextAlignment="Center"
+                    Text="CONFIGURATION"
+                    TextColor="{StaticResource BlackTextColor}"
+                    VerticalTextAlignment="Center" />
+                    
+                    <Grid x:Name="FooterGrid" Margin="10,0,0,0" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="16" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label
+			                x:Name="LblLogin"
+			                FontAttributes="Bold"
+			                FontFamily="OpenSans"
+			                FontSize="14"
+			                Text="Login"
+			                TextColor="{StaticResource BlackTextColor}"
+			                VerticalOptions="Center" 
+                            HorizontalOptions="Start"
+			                Grid.Row="0"
+			                Grid.Column="0"
+                            
+			             />
+
+                        <local:MyEntry
+			                x:Name="TxtUsername"
+			                HorizontalOptions="StartAndExpand"
+			                Placeholder="Login"
+                            HorizontalTextAlignment="End"
+			                VerticalOptions="Center" 
+                            WidthRequest="200"
+                            Keyboard="Email"
+			                Grid.Row="0"
+			                Grid.Column="1"
+			            />
+                        <Image 
+                               Source="LblArrow.png"
+                               Grid.Row="0"
+                               Grid.Column="2"
+                            
+                               />
+
+                        <Label
+			                x:Name="LblPassword"
+			                FontAttributes="Bold"
+			                FontFamily="OpenSans"
+			                FontSize="14"
+                            HorizontalOptions="Start"
+			                Text="Password"
+			                TextColor="{StaticResource BlackTextColor}"
+			                VerticalOptions="Center" 
+			                Grid.Row="1"
+			                Grid.Column="0"
+			            />
+
+                        <local:MyEntry
+			                x:Name="TxtPassword"
+			                Placeholder="Password"
+                            IsPassword="True"
+                            WidthRequest="200"
+                            HorizontalTextAlignment="End"
+			                HorizontalOptions="StartAndExpand"
+		  	                VerticalOptions="Center"
+			                Grid.Row="1"
+			                Grid.Column="1"
+			            />
+                        <Image 
+                               Source="LblArrow.png"
+                               Aspect="AspectFit"
+                               Grid.Row="1"
+                               Grid.Column="2"
+                               />
+                        <StackLayout
+                            Margin="10,0,0,0"
+                            BackgroundColor="White"
+                            Orientation="Horizontal"
+                            Grid.Row="2"
+			                Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            HeightRequest="18"
+                            
+                            >
+                            <Label
+                                
+                                x:Name="lblPasswordLost"
+                                FontSize="14"
+                                Text="Password Lost"
+                                TextColor="DarkBlue">
+                                      
+                            </Label>
+                        </StackLayout>
+                        <Label
+			                x:Name="LblLanguage"
+			                FontAttributes="Bold"
+			                FontFamily="OpenSans"
+			                FontSize="14"
+                            WidthRequest="200"
+			                HorizontalOptions="Start"
+			                Text="Language"
+			                TextColor="{StaticResource BlackTextColor}"
+			                VerticalOptions="Center"
+			                Grid.Row="3"
+			                Grid.Column="0"
+			            />
+
+                        
+                        <local:BorderlessPicker
+			                x:Name="LanguagePicker"
+			                Title="Language"
+			                HorizontalOptions="EndAndExpand"
+			                VerticalOptions="Center"
+                            WidthRequest="200"
+			                ItemsSource="{Binding Languages}"
+			                ItemDisplayBinding="{Binding Name}"
+			                Grid.Row="3"
+			                Grid.Column="1" 
+			            />
+                        <Image 
+                               Source="LblArrow.png"
+                               Aspect="AspectFit"
+                               Grid.Row="3"
+                               Grid.Column="2"
+                               />
+
+                    </Grid>
+                    
+            
+                    <StackLayout HorizontalOptions="Center">
+                        <Button
+                            WidthRequest="100"
+                                x:Name="LoginBtn"
+                                BackgroundColor="{StaticResource RedTextColor}"
+                                Clicked="LoginBtn_Clicked"
+                                Text="Save"
+                                TextColor="White" />
+                    </StackLayout>
+                   
+                </StackLayout>
+            </StackLayout> <!--MainContent End-->
+            
+            <!--Footer Starts-->
+         
+            <AbsoluteLayout HeightRequest="75" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"   >
+                <StackLayout x:Name="Navi" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="All">
+                    <Grid VerticalOptions="EndAndExpand" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="2"/>
+                        </Grid.RowDefinitions>
+                        <BoxView x:Name="SelectedMenu" BackgroundColor="{StaticResource RedTextColor}"
+                                     Grid.Column="3" Grid.Row="1"
+                                     />
+
+
+                        <Button 
+                        x:Name="BtnDoc"
+                        Image="Document.png"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        BorderColor="White"
+                        Clicked="BtnDoc_Clicked"
+                                        />
+                        <Button x:Name="BtnComm"
+                            Image="Chat.png"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnComm_Clicked"
+                                        />
+                        <Button x:Name="BtnHelp"
+                            Image="I.png"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnHelp_Clicked"
+                            />
+                        <Button x:Name="BtnConfig"
+                            Image="Gear_selected.png"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnConfig_Clicked"
+                            />
+                    </Grid>
+
+                </StackLayout>
+     
+
+            </AbsoluteLayout >
+            <StackLayout 
+                VerticalOptions="End"
+                 Margin="0,0,0,10"
+                  AbsoluteLayout.LayoutBounds="0.5,1"
+                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                >
+                <Button 
+                    x:Name="BtnHome"
+                    BackgroundColor="White"
+                    Image="Home.png"
+                    BorderRadius="50"
+                    HeightRequest="100"
+                    BorderWidth="1"
+                    MinimumHeightRequest="100"
+                    WidthRequest="100"
+                    MinimumWidthRequest="100"
+                    Clicked="BtnHome_Clicked"
+                 
+                    
+                    />
+            </StackLayout>
+
+            <!--Footer End-->
+
+            <ActivityIndicator
+                    x:Name="ActivityLayout"
+                    IsVisible="False"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,50,50"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    HorizontalOptions="CenterAndExpand"
+                />
+
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

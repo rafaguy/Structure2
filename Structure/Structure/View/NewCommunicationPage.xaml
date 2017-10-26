@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Structure.View.NewCommunicationPage"
+             BackgroundColor="White"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <StackLayout Padding="0,20,0,0">
+        <!--Header-->
+        <Grid Padding="5" BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                    x:Name="ArrowBack"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                    Image="arrow_left.png"
+                    VerticalOptions="StartAndExpand" />
+
+            <Image
+                        x:Name="logo"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Aspect="AspectFit"
+                        HeightRequest="75"
+                        Source="header.png"
+                        WidthRequest="75" />
+
+
+            <ActivityIndicator
+                    x:Name="CongifActivity"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                  />
+
+        </Grid>
+        <!--Header End-->
+        <Label FontAttributes="Bold" Text="Communications" HorizontalOptions="CenterAndExpand"></Label>
+        <Editor Text="Description" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ></Editor>
+        <Button Image="Tick.png" HorizontalOptions="CenterAndExpand" x:Name="validateButton" VerticalOptions="End" BackgroundColor="White"></Button>
+       
+        <!--Footer-->
+        <AbsoluteLayout VerticalOptions="End" >
+            <StackLayout BackgroundColor="Transparent" Margin="0,20,0,0" AbsoluteLayout.LayoutBounds="0,0.9,1,1" AbsoluteLayout.LayoutFlags="All">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button 
+                        x:Name="BtnDoc"
+                        Image="Document.png"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        BorderColor="White"
+                        Clicked="BtnDoc_Clicked"
+                                        />
+                    <Button x:Name="BtnComm"
+                            Image="Chat.png"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnComm_Clicked"
+                                        />
+                    <Button x:Name="BtnHelp"
+                            Image="I.png"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnHelp_Clicked"
+                            />
+                    <Button x:Name="BtnConfig"
+                            Image="Gear.png"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnConfig_Clicked"
+                            />
+                </Grid>
+
+            </StackLayout>
+            <Button 
+                x:Name="BtnHome"
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                AbsoluteLayout.LayoutBounds="0.5,0,60,40"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                Image="Home.png"
+                BorderRadius="10"
+                Clicked="BtnHome_Clicked"
+            />
+        </AbsoluteLayout >
+        <!--Footer End-->
+    </StackLayout>
+    
+</ContentPage>

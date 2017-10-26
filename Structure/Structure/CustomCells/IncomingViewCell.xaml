@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:local="clr-namespace:Structure.Extensions"
+             x:Class="Structure.CustomCells.IncomingViewCell">
+    <Grid ColumnSpacing="2" Padding="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+          
+        </Grid.RowDefinitions>
+        <Label FontSize="Micro" Grid.Row="0" Grid.Column="0" Text="{Binding Auteur}" TextColor="Black"></Label>
+        <Frame Grid.Row="1" OutlineColor="Transparent" HasShadow="False" Grid.Column="0" BackgroundColor="White">
+            <StackLayout>
+                <local:ExtendedLabel TextColor="Gray" Text="{Binding Text}" HorizontalOptions="Start"></local:ExtendedLabel>
+
+                <Label FontSize="Micro" HorizontalOptions="End" Text="{Binding Date,StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>
+
+            </StackLayout>
+
+        </Frame>
+    </Grid>
+</ViewCell>

@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Structure.View.NotificationCommunicationPage"
+             xmlns:local="clr-namespace:Structure.Extensions"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+                    iOS="0,20,0,0">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <StackLayout>
+        <!--Header-->
+        <Image x:Name="logo"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Aspect="AspectFit"
+                        HeightRequest="75"
+                        Source="header.png"
+                        WidthRequest="70" />
+        <!--Header End-->
+        <StackLayout BackgroundColor="{StaticResource GrayBackground}" Margin="0,10,0,0">
+            <Label  Text="NOTIFICATIONS" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"></Label>
+            <ListView IsGroupingEnabled="True"
+              x:Name="Notificationlist"
+                  
+                 HasUnevenRows="True" BackgroundColor="White" Margin="16,0,16,0">
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Button HorizontalOptions="Start" VerticalOptions="Center" Image="{Binding ItemIcon}" BackgroundColor="Transparent"
+                                        Grid.Row="0" Grid.Column="0"/>
+                                    <StackLayout Spacing="0" Grid.Row="0" Grid.Column="1">
+                                        <local:ExtendedLabel  HorizontalOptions="Start"  Text="{Binding NotificationText}"
+                                          VerticalOptions="CenterAndExpand">
+                                        </local:ExtendedLabel>
+                                        <Label FontSize="Micro" Text="{Binding Date,StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>
+                                    </StackLayout>
+                                    
+                                </Grid>
+
+                            </StackLayout>
+                        </ViewCell>
+
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <StackLayout Orientation="Horizontal">
+                                <Label Margin="16,0,0,0" FontSize="Medium"   Text="{Binding Title}"  VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Button_Clicked" CommandParameter="{Binding .}"></TapGestureRecognizer>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Button Image="{Binding StateIcon}"
+                                Clicked="Button_Clicked" 
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="Transparent"
+                                    HorizontalOptions="End"
+                                        ></Button>
+                            </StackLayout>
+
+
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+            </ListView>
+
+            <!--
+        <Button x:Name="BtnNewCom" Image="AddDoc.png" HeightRequest="50" WidthRequest="50" VerticalOptions="End" HorizontalOptions="Center" BackgroundColor="Transparent"
+               Clicked="BtnNewCom_Clicked" ></Button>
+        -->
+            <StackLayout  Margin="16,0,16,50" BackgroundColor="White" >
+                <Button  x:Name="BtnAddMessage" 
+                         HorizontalOptions="CenterAndExpand"
+                         ContentLayout="Left,2" 
+                         BackgroundColor="White"
+                     
+                         Image="AddDoc.png" 
+                         Text="ADD A MESSAGE" 
+                     Clicked="BtnAddMessage_Clicked_1"
+                          
+                         TextColor="{StaticResource RedTextColor}"  />
+            </StackLayout>
+
+        </StackLayout>
+        <!--Footer Starts-->
+        <AbsoluteLayout HeightRequest="75" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"   >
+            <StackLayout x:Name="Navi" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="All">
+                <Grid VerticalOptions="EndAndExpand" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="2"/>
+                    </Grid.RowDefinitions>
+                    <BoxView x:Name="SelectedMenu" BackgroundColor="{StaticResource RedTextColor}"
+                                     Grid.Column="1" Grid.Row="1"
+                                     />
+
+                    <Button 
+                        x:Name="BtnDoc"
+                        Image="Document.png"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        BorderColor="White"
+                        Clicked="BtnDoc_Clicked"
+                                        />
+                    <Button x:Name="BtnComm"
+                            Image="Chat_Selected.png"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnComm_Clicked"
+                                        />
+                    <Button x:Name="BtnHelp"
+                            Image="I.png"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnHelp_Clicked"
+                            />
+                    <Button x:Name="BtnConfig"
+                            Image="Gear.png"
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            BackgroundColor="White"
+                            BorderColor="White"
+                            Clicked="BtnConfig_Clicked"
+                            />
+                </Grid>
+
+            </StackLayout>
+            <StackLayout 
+                VerticalOptions="End"
+                 Margin="0,0,0,10"
+                  AbsoluteLayout.LayoutBounds="0.5,1"
+                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                >
+                <Button 
+                    x:Name="BtnHome"
+                    BackgroundColor="White"
+                    Image="Home.png"
+                    BorderRadius="50"
+                    HeightRequest="100"
+                    BorderWidth="1"
+                    MinimumHeightRequest="100"
+                    WidthRequest="100"
+                    MinimumWidthRequest="100"
+                    Clicked="BtnHome_Clicked"
+                 
+                    
+                    />
+            </StackLayout>
+
+        </AbsoluteLayout >
+        <!--Footer End-->
+    </StackLayout>
+    
+    
+   
+</ContentPage>
