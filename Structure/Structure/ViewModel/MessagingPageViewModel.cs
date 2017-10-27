@@ -18,26 +18,30 @@ namespace Structure.ViewModel
 {
   public  class MessagingPageViewModel:INotifyPropertyChanged
     {
-        ActivityIndicator activitityIndicator = null;
-        public MessagingPageViewModel(ActivityIndicator actIndicator)
+        #region Private field
+         ObservableCollection<Communication> messages;
+        string messageText;
+        static readonly string requestUri = string.Concat(Constants.GetCommunicationrequestUri, "6FDFDD074B4BD30209085207575E5D0D");
+        static System.Net.NetworkCredential credentials = new System.Net.NetworkCredential { UserName = Constants.ApiUserName, Password = Constants.ApiPassword };
+        #endregion
+        Command<string> sendMessageCommand => new Command<string>(async (msg) => await SendMessageAsync(msg), CanSendMessage);
+        public Command<string> SendMessage => sendMessageCommand;
+
+        public MessagingPageViewModel()
         {
-            // Task.Run(async()=> this.messages=await getListCommunication()) ;
 
-
-
-            this.activitityIndicator = actIndicator;
+            
+            this.Messages = GlobalCommunicationDataSource.Messages;
         }
 
-        public async Task loadCommunication()
+        public  async Task loadCommunication()
         {
-            activitityIndicator.IsVisible = true;
-            activitityIndicator.IsRunning = true;
-            this.Messages = await getListCommunication();
-            activitityIndicator.IsVisible = false;
-            activitityIndicator.IsRunning = false;
+         
+           this. Messages = await getListCommunication();
+           
         }
 
-        public ObservableCollection<Communication> Messages
+        public  ObservableCollection<Communication> Messages
         {
             get { return messages; }
             set
@@ -65,24 +69,18 @@ namespace Structure.ViewModel
             }
         }
         //public bool IsConnected=>clien
-        public event PropertyChangedEventHandler PropertyChanged;
+        public  event PropertyChangedEventHandler PropertyChanged;
 
         void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        // readonly WebSocket.Portable.WebSocketClient client;
-        //readonly CancellationTokenSource cts;
+       
 
-        Command<string> sendMessageCommand => new Command<string>(async(msg)=> await SendMessageAsync(msg),CanSendMessage);
-        public Command<string> SendMessage => sendMessageCommand;
-        ObservableCollection<Communication> messages;
-        string messageText;
-        readonly string username;
-        readonly string requestUri =string.Concat(Constants.GetCommunicationrequestUri, "6FDFDD074B4BD30209085207575E5D0D");
-        System.Net.NetworkCredential credentials = new System.Net.NetworkCredential { UserName = Constants.ApiUserName, Password = Constants.ApiPassword };
+       
+       
         
-        private async Task<ObservableCollection<Communication>> getListCommunication()
+        public static async Task<ObservableCollection<Communication>> getListCommunication()
         {
             try {
                 var handler = new HttpClientHandler { Credentials = credentials };
@@ -93,7 +91,7 @@ namespace Structure.ViewModel
             }
             catch
             {
-               await new Page().DisplayAlert("Network Error", "No Connection Internet", "OK");
+              
                 return default(ObservableCollection<Communication>);
             }
             
@@ -120,16 +118,14 @@ namespace Structure.ViewModel
                
                
                    MessageText = string.Empty;
-                   this.Messages.Add(new Communication {Auteur="You",Text=msg.comments,Date=DateTime.Now,Position="R" });
+                   Messages.Add(new Communication {Auteur="You",Text=msg.comments,Date=DateTime.Now,Position="R" });
 
                 await client.PostAsync(postUri, data);
 
 
             }
             catch(Exception e)
-            {
-               
-               
+            {           
             }
            
            

@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace Structure.ViewModel
 {
-    class NotificationCommunicationViewModel:ObservableCollection<Notification>
+   public class NotificationCommunicationViewModel:ObservableCollection<Notification>
     {
        
         private bool _expanded;

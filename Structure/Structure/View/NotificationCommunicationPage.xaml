@@ -26,8 +26,9 @@
             <ActivityIndicator x:Name="activityIndicator" Color="Blue" HeightRequest="50" WidthRequest="50"></ActivityIndicator>
             <ListView IsGroupingEnabled="True"
               x:Name="Notificationlist"
-                  
-                 HasUnevenRows="True" BackgroundColor="White" Margin="16,0,16,0">
+                 HasUnevenRows="True"
+                      BackgroundColor="White" 
+                      Margin="16,10,16,0">
                 <ListView.ItemTemplate>
 
                     <DataTemplate>
@@ -85,10 +86,6 @@
                 </ListView.GroupHeaderTemplate>
             </ListView>
 
-            <!--
-        <Button x:Name="BtnNewCom" Image="AddDoc.png" HeightRequest="50" WidthRequest="50" VerticalOptions="End" HorizontalOptions="Center" BackgroundColor="Transparent"
-               Clicked="BtnNewCom_Clicked" ></Button>
-        -->
             <StackLayout  Margin="16,0,16,50" BackgroundColor="White" >
                 <Button  x:Name="BtnAddMessage" 
                          HorizontalOptions="CenterAndExpand"
@@ -103,6 +100,7 @@
             </StackLayout>
 
         </StackLayout>
+        
         <!--Footer Starts-->
         <AbsoluteLayout HeightRequest="75" AbsoluteLayout.LayoutBounds="0,1,1,50" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"   >
             <StackLayout x:Name="Navi" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="All">
@@ -115,13 +113,12 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="2"/>
                     </Grid.RowDefinitions>
                     <BoxView x:Name="SelectedMenu" BackgroundColor="{StaticResource RedTextColor}"
                                      Grid.Column="1" Grid.Row="1"
                                      />
-
                     <Button 
                         x:Name="BtnDoc"
                         Image="Document.png"
@@ -132,11 +129,13 @@
                         Clicked="BtnDoc_Clicked"
                                         />
                     <Button x:Name="BtnComm"
+                            ContentLayout="Left,0"
                             Image="Chat_Selected.png"
                             Grid.Row="0"
                             Grid.Column="1"
                             BackgroundColor="White"
                             BorderColor="White"
+                            Text="(1)"
                             Clicked="BtnComm_Clicked"
                                         />
                     <Button x:Name="BtnHelp"
@@ -160,7 +159,7 @@
             </StackLayout>
             <StackLayout 
                 VerticalOptions="End"
-                 Margin="0,0,0,10"
+                 Margin="0,0,0,25"
                   AbsoluteLayout.LayoutBounds="0.5,1"
                   AbsoluteLayout.LayoutFlags="PositionProportional"
                 >
@@ -175,8 +174,7 @@
                     WidthRequest="100"
                     MinimumWidthRequest="100"
                     Clicked="BtnHome_Clicked"
-                 
-                    
+                                    
                     />
             </StackLayout>
 

@@ -1,6 +1,7 @@
 ﻿using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
 using Structure.Data;
+using Structure.Interface;
 using Structure.Model;
 using Structure.Service;
 using Structure.Utils;
@@ -31,13 +32,18 @@ namespace Structure.View
 
         public ConfigurationPageViewModel ConfigurationViewModel { get; set; } = new ConfigurationPageViewModel();
         public DatabaseAccess DatabaseAccess { get; set; }
-  
+
+        public LoginService LoginService { get; set; }
+        public string CultureInfo { get; set; }
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationPage" /> class.
         /// </summary>
         public ConfigurationPage()
         {
             DatabaseAccess = new DatabaseAccess();
+            LoginService = new LoginService();
             this.BindingContext = ConfigurationViewModel;
             InitializeComponent();
             ResetLayout(true);
@@ -141,7 +147,7 @@ namespace Structure.View
 
                 string login = TxtUsername.Text;
                 string pwrd = TxtPassword.Text;
-                string lang = language.Name;
+                string lang = CultureInfo;
 
                 DatabaseAccess.SaveDefaultLanguage(language);
                 SetLanguage();
@@ -175,9 +181,8 @@ namespace Structure.View
         /// <returns></returns>
         public async Task<string> AuthentifyLogin(string userName, string password,string language)
         {
-            LoginService loginService = new LoginService();
 
-            var clientKey = await loginService.PostConfig(userName, password,language);
+            var clientKey = await LoginService.PostConfig(userName, password,language);
 
             return clientKey;
 
@@ -208,8 +213,8 @@ namespace Structure.View
         /// </summary>
         public void SetLanguage()
         {
-            var defaultCulture = DatabaseAccess.GetCultureInfo();
-            HandleTranslation(defaultCulture);
+            CultureInfo = DatabaseAccess.GetCultureInfo();
+            HandleTranslation(CultureInfo);
         }
 
         /// <summary>
@@ -228,7 +233,7 @@ namespace Structure.View
             LblLanguage.Text = Localize.GetString(Constants.language, cultureInfo);
             LanguagePicker.Title = Localize.GetString(Constants.language, cultureInfo);
 
-            lblPasswordLost.Text = Localize.GetString(Constants.passwordLost, cultureInfo);
+           BtnPasswordLost.Text = Localize.GetString(Constants.passwordLost, cultureInfo);
 
             LoginBtn.Text = Localize.GetString(Constants.save, cultureInfo);
             LblConfig.Text = Localize.GetString(Constants.configuration, cultureInfo);
@@ -299,8 +304,22 @@ namespace Structure.View
         {
             Navigation.PushAsync(new HomePage());
         }
+
         #endregion
 
+        private async void BtnPasswordLost_Clicked(object sender, EventArgs e)
+        {
+            var clientKey = DatabaseAccess.GetClientKey();
+            if (clientKey != null)
+            {
+                await DisplayAlert("Sending..", "Sending request", "ok");
+              await LoginService.PostPasswordLost(clientKey);
 
+            }
+            else
+            {
+                await DisplayAlert("Error","No user Found","ok");
+            }
+        }
     }
 }

@@ -23,8 +23,10 @@ namespace Structure.Droid
             LoadApplication(new App());
    
         }
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        public async override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
+           // await CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Storage });
+            //await CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Location });
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
            
         }

@@ -50,13 +50,14 @@ namespace Structure.Data
             return _con.Insert(document);
         }
 
-        public Document ReadDocument(int id)
+        public Document ReadDocument(string id)
         {
             return _con.Table<Document>().SingleOrDefault(x => x.IdMobile == id);
         }
 
         public int CreateManyDocuments(IEnumerable<Document> documents)
         {
+
             //Delete All previous Data not temporary
             DeleteApiDocuments();
 
@@ -66,9 +67,9 @@ namespace Structure.Data
             var tempDoc = ReadTempDocument().ToList();
 
             //compare name and validity
-            var validatedPhoto = documents.Where(x => x.Validated && tempDoc.Contains(x)).ToList();
+          //  var validatedPhoto = documents.Where(x => x.Validated && tempDoc.Contains(x)).ToList();
 
-            var tempValidated = tempDoc.Where(x => documents.Any(y => y.Name == x.Name && y.Validated)).ToList();
+            var tempValidated = tempDoc.Where(x => documents.Any(y => y.IdMobile == x.IdMobile && y.Validated)).ToList();
 
             foreach (var item in tempDoc)
             {
@@ -116,8 +117,9 @@ namespace Structure.Data
 
         public int CreateConfiguration(ConfigurationModel configuration)
         {
-            var dbConfig = _con.Table<ConfigurationModel>().ToList().SingleOrDefault(x => x.ClientKey == configuration.ClientKey);
-            if (dbConfig != null)
+            _con.Execute("Delete From ConfigurationModel");
+            //var dbConfig = _con.Table<ConfigurationModel>().ToList().SingleOrDefault(x => x.ClientKey == configuration.ClientKey);
+           /* if (dbConfig != null)
             {
                 dbConfig.Language = configuration.Language;
                 dbConfig.Login = configuration.Login;
@@ -129,7 +131,7 @@ namespace Structure.Data
                 return UpdateOneConfigurations(dbConfig);
 
             }
-            else
+            else */
             {
                 return _con.Insert(configuration);
 
@@ -161,9 +163,23 @@ namespace Structure.Data
             return _con.Table<ConfigurationModel>().ToList();
         }
 
+        /// <summary>
+        /// Gets the client key.
+        /// </summary>
+        /// <returns></returns>
         public string GetClientKey()
         {
-            return _con.Table<ConfigurationModel>().SingleOrDefault(x => x != null).ClientKey;
+            try
+            {
+                _con.CreateTable<ConfigurationModel>();
+                return _con.Table<ConfigurationModel>().SingleOrDefault(x => x != null).ClientKey;
+
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+            }
         }
 
         #endregion

@@ -36,10 +36,19 @@ namespace Structure.iOS.Implementation
             return res;
         }
 
-        public async Task<string> Base64ToFile(string base64String, string fileName)
+        public async Task<string> Base64ToFile(string base64String, string fileName,string extension)
         {
-            byte[] b = Convert.FromBase64String(base64String);
-           return await FileSaver.SaveText(fileName, b);
+            try
+            {
+                byte[] b = Convert.FromBase64String(base64String);
+                return await FileSaver.SaveText(fileName + extension, b);
+            }
+            catch (Exception e) 
+            {
+
+                throw e;
+            }
+          
 
         }
     }

@@ -42,5 +42,14 @@
         public const string PostCommunication = @"https://api-tray.intragest.info/api/MobilePostCommunication";
         #endregion
 
+        #region EmailCredentials
+        public const string EmailAddress = "app-structure@cygest.fr";
+        public const string EmailPassword = "rGLwBJHzT8#$ky&x";
+
+        #endregion
+
+        #region Documents
+        public const string Temporary = "temporary";
+        #endregion
     }
 }

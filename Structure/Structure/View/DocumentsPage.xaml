@@ -9,18 +9,18 @@
              x:Name="TheDocumentsPage"
              >
 
-    
+
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
                     iOS="0,20,0,0">
         </OnPlatform>
     </ContentPage.Padding>
- 
+
     <ContentPage.Content >
         <AbsoluteLayout>
             <StackLayout x:Name="MainContent">
-            <!--Header-->
-            <Image
+                <!--Header-->
+                <Image
                        HeightRequest="70"
                         x:Name="logo"
                         Grid.Row="0"
@@ -28,46 +28,50 @@
                         Aspect="AspectFit"
                         Source="header.png"
                     />
-            <!--Header End-->
-            <StackLayout BackgroundColor="{StaticResource GrayBackground}" Margin="0,10,0,0">
-                <Label  x:Name="LblDocumentTitle" Text="DOCUMENTS" HorizontalOptions="CenterAndExpand"/>
-                <ScrollView>
+                <!--Header End-->
+                <StackLayout BackgroundColor="{StaticResource GrayBackground}" Margin="0,10,0,0">
+                    <Label  x:Name="LblDocumentTitle" Text="DOCUMENTS" HorizontalOptions="CenterAndExpand"/>
+                    <ScrollView>
                         <StackLayout  Margin="10,0,10,0" >
                             <ListView BackgroundColor="White" x:Name="LstDocs" ItemSelected="LstDocs_ItemSelected" IsGroupingEnabled="True" ItemsSource="{Binding Categories}">
-                            <ListView.GroupHeaderTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <ContentView Padding="10,0,0,0">
-                                            <Grid>
-                                                <Label Text="{Binding Key.Category}" VerticalOptions="Center"
+                                <ListView.GroupHeaderTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <ContentView Padding="10,0,0,0">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition  Width="25"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Text="{Binding Key.Category}" VerticalOptions="Center"
 										           Grid.Column="0" Grid.Row="0"
                                                    />
-                                                <Image 
+                                                    <Image 
                                                Source="LblArrow.png"
                                                Grid.Row="0"
                                                Grid.Column="1"
                                                HorizontalOptions="End"
                                                />
-                                            </Grid>
+                                                </Grid>
 
-                                            <ContentView.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={x:Reference TheDocumentsPage}, Path=BindingContext.HeaderSelectedCommand}" CommandParameter="{Binding .}"/>
-                                            </ContentView.GestureRecognizers>
-                                        </ContentView>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.GroupHeaderTemplate>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextCell Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                                                <ContentView.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference TheDocumentsPage}, Path=BindingContext.HeaderSelectedCommand}" CommandParameter="{Binding .}"/>
+                                                </ContentView.GestureRecognizers>
+                                            </ContentView>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.GroupHeaderTemplate>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </StackLayout>
-                </ScrollView>
+                    </ScrollView>
 
-                <StackLayout  Margin="10,0,10,10" BackgroundColor="White" >
-                    <Button  x:Name="BtnAddDoc" 
+                    <StackLayout  Margin="10,0,10,10" BackgroundColor="White" >
+                        <Button  x:Name="BtnAddDoc" 
                          HorizontalOptions="CenterAndExpand"
                          ContentLayout="Left,2" 
                          BackgroundColor="White"
@@ -75,31 +79,31 @@
                          Text="ADD A DOCUMENT" 
                           Clicked="AddDocument_Clicked"
                          TextColor="{StaticResource RedTextColor}"  />
+                    </StackLayout>
+
                 </StackLayout>
 
-            </StackLayout>
+                <!--Footer Starts-->
 
-            <!--Footer Starts-->
+                <AbsoluteLayout HeightRequest="75" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"   >
+                    <StackLayout x:Name="Navi" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="All">
+                        <Grid VerticalOptions="EndAndExpand" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
 
-            <AbsoluteLayout HeightRequest="75" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"   >
-                <StackLayout x:Name="Navi" AbsoluteLayout.LayoutBounds="0,1,1,1" AbsoluteLayout.LayoutFlags="All">
-                    <Grid VerticalOptions="EndAndExpand" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="25"/>
-                            <RowDefinition Height="2"/>
-                        </Grid.RowDefinitions>
-                        <BoxView x:Name="SelectedMenu" BackgroundColor="{StaticResource RedTextColor}"
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="2"/>
+                            </Grid.RowDefinitions>
+                            <BoxView x:Name="SelectedMenu" BackgroundColor="{StaticResource RedTextColor}"
                                      Grid.Column="0" Grid.Row="1"
                                      />
 
-                        <Button 
+                            <Button 
                         x:Name="BtnDoc"
                         Image="Document_Selected.png"
                         Grid.Row="0"
@@ -108,7 +112,7 @@
                         BorderColor="White"
                         Clicked="BtnDoc_Clicked"
                                         />
-                        <Button x:Name="BtnComm"
+                            <Button x:Name="BtnComm"
                             Image="Chat.png"
                             Grid.Row="0"
                             Grid.Column="1"
@@ -116,7 +120,7 @@
                             BorderColor="White"
                             Clicked="BtnComm_Clicked"
                                         />
-                        <Button x:Name="BtnHelp"
+                            <Button x:Name="BtnHelp"
                             Image="I.png"
                             Grid.Row="0"
                             Grid.Column="2"
@@ -124,7 +128,7 @@
                             BorderColor="White"
                             Clicked="BtnHelp_Clicked"
                             />
-                        <Button x:Name="BtnConfig"
+                            <Button x:Name="BtnConfig"
                             Image="Gear.png"
                             Grid.Row="0"
                             Grid.Column="3"
@@ -132,16 +136,16 @@
                             BorderColor="White"
                             Clicked="BtnConfig_Clicked"
                             />
-                    </Grid>
+                        </Grid>
 
-                </StackLayout>
-                <StackLayout 
+                    </StackLayout>
+                    <StackLayout 
                 VerticalOptions="End"
                  Margin="0,0,0,10"
                   AbsoluteLayout.LayoutBounds="0.5,1"
                   AbsoluteLayout.LayoutFlags="PositionProportional"
                 >
-                    <Button 
+                        <Button 
                     x:Name="BtnHome"
                     BackgroundColor="White"
                     Image="Home.png"
@@ -155,12 +159,12 @@
                  
                     
                     />
-                </StackLayout>
+                    </StackLayout>
 
-            </AbsoluteLayout >
-           
+                </AbsoluteLayout >
 
-            <!--Footer End-->
+
+                <!--Footer End-->
             </StackLayout>
             <ActivityIndicator
                     x:Name="ActivityLayout"
@@ -172,7 +176,7 @@
 
 
         </AbsoluteLayout>
-        
+
     </ContentPage.Content>
 
 </ContentPage>

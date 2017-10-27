@@ -6,7 +6,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:DataTemplateSelector x:Key="MessageTemplateSelector">
-                
+
             </local:DataTemplateSelector>
         </ResourceDictionary>
     </ContentPage.Resources>

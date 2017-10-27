@@ -24,43 +24,34 @@ namespace Structure.View
         public  NotificationCommunicationPage()
         {
             InitializeComponent();
+            _notification = GlobalCommunicationDataSource.Notification;
+            UpdateList();
         }
 
         protected override async void OnAppearing()
         {
-            activityIndicator.IsVisible = true;
-            activityIndicator.IsRunning = true;
-            // base.OnAppearing();
-            this._notification =await getListNotification();
-            activityIndicator.IsVisible = false;
-            activityIndicator.IsRunning = false;
-            UpdateList();
-        }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            if(sender as Button !=null)
+            if(GlobalCommunicationDataSource.Notification==null)
             {
-                int selectedIndex = _expandedNotification.IndexOf(
-               ((NotificationCommunicationViewModel)((Button)sender).CommandParameter)
-                );
-                _notification[selectedIndex].Expanded = !_notification[selectedIndex].Expanded;
+                activityIndicator.IsVisible = true;
+                activityIndicator.IsRunning = true;
+                // base.OnAppearing();
+                this._notification = await getListNotification();
+                activityIndicator.IsVisible = false;
+                activityIndicator.IsRunning = false;
+                UpdateList();
             }
-            else
-            {
-                var label = sender as Label;
-                var tapGestureRecognizer = label.GestureRecognizers[0] as TapGestureRecognizer;
 
-                int selectedIndex = _expandedNotification.IndexOf(
-               ((NotificationCommunicationViewModel) tapGestureRecognizer.CommandParameter)
-                );
-                _notification[selectedIndex].Expanded = !_notification[selectedIndex].Expanded;
-            }
+          
             
-            UpdateList();
         }
+
+       
         private void UpdateList()
         {
+            if(_notification==null)
+            {
+                return;
+            }
              _expandedNotification = new ObservableCollection<NotificationCommunicationViewModel>();
           
 
@@ -87,35 +78,7 @@ namespace Structure.View
             Notificationlist.ItemsSource = _expandedNotification;
            
         }
-        #region Footer Navigations
-        private void BtnDoc_Clicked(object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new DocumentsPage());
-
-        }
-
-        private void BtnComm_Clicked(object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new NotificationCommunicationPage());
-
-        }
-
-        private void BtnHelp_Clicked(object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new WebPage());
-        }
-
-        private void BtnConfig_Clicked(object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new ConfigurationPage());
-
-        }
-
-        private void BtnHome_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new HomePage());
-        }
-        #endregion
+        
 
         private void BtnNewCom_Clicked(object sender, EventArgs e)
         {
@@ -129,7 +92,7 @@ namespace Structure.View
             
         }
 
-        private async Task<ObservableCollection<NotificationCommunicationViewModel>> getListNotification()
+        public static async Task<ObservableCollection<NotificationCommunicationViewModel>> getListNotification()
         {
              string requestUriListNotification = string.Concat(Constants.GetListNotificationrequestUri, "6FDFDD074B4BD30209085207575E5D0D");
              string requestUriListCommunication = string.Concat(Constants.GetCommunicationrequestUri, "6FDFDD074B4BD30209085207575E5D0D");
@@ -159,14 +122,32 @@ namespace Structure.View
             }
             catch
             {
-                var app = Application.Current as App;
-
-                await  app.CurrentPage.DisplayAlert("Network Error", "No Connection Internet", "OK");
                 return default(ObservableCollection<NotificationCommunicationViewModel>);
             }
            
         }
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            if (sender as Button != null)
+            {
+                int selectedIndex = _expandedNotification.IndexOf(
+               ((NotificationCommunicationViewModel)((Button)sender).CommandParameter)
+                );
+                _notification[selectedIndex].Expanded = !_notification[selectedIndex].Expanded;
+            }
+            else
+            {
+                var label = sender as Label;
+                var tapGestureRecognizer = label.GestureRecognizers[0] as TapGestureRecognizer;
 
+                int selectedIndex = _expandedNotification.IndexOf(
+               ((NotificationCommunicationViewModel)tapGestureRecognizer.CommandParameter)
+                );
+                _notification[selectedIndex].Expanded = !_notification[selectedIndex].Expanded;
+            }
+
+            UpdateList();
+        }
         private void BtnAddMessage_Clicked_1(object sender, EventArgs e)
         {
             Navigation.PushAsync(new MessagingPage());
@@ -184,5 +165,35 @@ namespace Structure.View
             }
 
         }
+
+        #region Footer Navigations
+        private void BtnDoc_Clicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new DocumentsPage());
+
+        }
+
+        private void BtnComm_Clicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new NotificationCommunicationPage());
+
+        }
+
+        private void BtnHelp_Clicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new WebPage());
+        }
+
+        private void BtnConfig_Clicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushAsync(new ConfigurationPage());
+
+        }
+
+        private void BtnHome_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new HomePage());
+        }
+        #endregion
     }
 }

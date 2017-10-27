@@ -94,6 +94,7 @@
     <Compile Include="CustomRenderer\LabelExtendedRenderer.cs" />
     <Compile Include="Implementation\FileMgr.cs" />
     <Compile Include="Implementation\FileOpener.cs" />
+    <Compile Include="Implementation\ForgotPasswordEmail.cs" />
     <Compile Include="Implementation\LocationService.cs" />
     <Compile Include="Implementation\SaveFile.cs" />
     <Compile Include="Implementation\SqLiteDb.cs" />
@@ -360,6 +361,15 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\send.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Document_Selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\executive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\orange.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

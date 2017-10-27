@@ -10,7 +10,7 @@ namespace Structure.Interface
 {
     public interface IDocumentService
     {
-        Task<bool> PostDocument(Document document, string clientKey);
+        Task<bool> PostDocument(Document document, string clientKey, LocationModel location);
 
         Task<ObservableCollection<Document>> GetDocuments(string ClientKey);
     }

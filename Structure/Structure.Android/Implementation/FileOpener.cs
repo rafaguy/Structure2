@@ -13,14 +13,14 @@ namespace Structure.Droid.Implementation
 {
     public class FileOpener : IFileOpener
     {
-        public void OpenFile(string filePath)
+        public async void OpenFile(string filePath)
         {
             Android.Net.Uri uri = Android.Net.Uri.Parse("file:///" + filePath);
             Intent fileIntent = new Intent(Intent.ActionView);
             fileIntent.SetDataAndType(uri, "application/*");
             fileIntent.SetFlags(ActivityFlags.NoHistory);
             Intent intent = Intent.CreateChooser(fileIntent, "Open File");
-            CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Storage });
+           await  CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Storage });
             try
             {
                Forms.Context.StartActivity(intent);

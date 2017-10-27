@@ -16,7 +16,14 @@ namespace Structure.ViewModel
     public class MainViewModel :BaseViewModel
     {
         ObservableCollection<Grouping<SelectCategoryViewModel, Document>> _Categories;
-      
+
+        private string _ExtentedImageValue;
+        public string ExtentedImageValue
+        {
+            get { return _ExtentedImageValue; }
+            set { SetValue(ref _ExtentedImageValue, value); }
+        }
+
         public ObservableCollection<Document> DataDocuments{get; set;}
         public ObservableCollection<Grouping<SelectCategoryViewModel, Document>> Categories
         {
@@ -35,7 +42,7 @@ namespace Structure.ViewModel
                     g.Key.Selected = !g.Key.Selected;
                     if (g.Key.Selected)
                     {
-
+                       ExtentedImageValue = "expanded_blue.png";
                        DataDocuments.Where(i => (i.Type == g.Key.Category))
                                       .ForEach(g.Add);
 
@@ -43,6 +50,7 @@ namespace Structure.ViewModel
                     else
                     {
                         g.Clear();
+                        ExtentedImageValue = "collapsed_blue.png";
                     }
                 });
             }
@@ -55,15 +63,17 @@ namespace Structure.ViewModel
           
             DatabaseAccess = new DatabaseAccess();
             DocumentService = new DocumentService();
+            Categories = new ObservableCollection<Grouping<SelectCategoryViewModel, Document>>();
+            ExtentedImageValue = "collapsed_blue.png";
 
-           
+
         }
         public void ConstructList()
         {
             DataDocuments = new ObservableCollection<Document>(DatabaseAccess.ReadAllDocuments());
             Categories = new ObservableCollection<Grouping<SelectCategoryViewModel, Document>>();
             var selectCategories =
-             DataDocuments.Select(x => new SelectCategoryViewModel { Category = x.Type, Selected = false })
+             DataDocuments.Select(x => new SelectCategoryViewModel {Category = x.Type, Selected = false })
                     .GroupBy(sc => new { sc.Category })
                     .Select(g => g.First())
                     .ToList();
@@ -73,15 +83,23 @@ namespace Structure.ViewModel
         {
             List<Document> docsToAdd = new List<Document>();
 
-            var clientKey = DatabaseAccess.GetClientKey();
-            var documentList = await DocumentService.GetDocuments(clientKey);
+          //  var clientKey = DatabaseAccess.GetClientKey();
+            var documentList = await DocumentService.GetDocuments("12345");
             foreach (var item in documentList)
             {
-                var filePath = await DependencyService.Get<IFileMgr>().Base64ToFile(item.Data, item.Name);
-                var position = DependencyService.Get<ILocationService>().GetLocation();
-                item.FilePath = filePath;
-                item.Longitude = position.Longitude;
-                item.Latitude = position.Latitude;
+
+                if (item.Type == "")
+                {
+                    item.Type = "No Type";
+                }
+                if (item.Name == "")
+                {
+                    item.Name = "No Name";
+                }
+                //var filePath = await DependencyService.Get<IFileMgr>().Base64ToFile(item.Data, item.Name,item.Extension);
+            
+               // item.FilePath = filePath;
+
 
                 docsToAdd.Add(item);
             }
@@ -93,9 +111,12 @@ namespace Structure.ViewModel
 
     }
     public class SelectCategoryViewModel
-    {
+    { 
+
         public string Category { get; set; }
         public bool Selected { get; set; }
+
+    
     }
 }
 

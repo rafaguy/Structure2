@@ -14,6 +14,7 @@ using Structure.Data;
 using Structure.Service;
 using Structure.Interface;
 using System.Linq;
+using Structure.Utils;
 
 namespace Structure.View
 {
@@ -35,11 +36,14 @@ namespace Structure.View
             set { SetValue(ref _carouselList, value); }
         }
 
+        public string CultureInfo { get; set; }
+
         public DatabaseAccess DatabaseAccess { get; set; }
 
         public DocumentService DocumentService { get; set; }
 
-        #endregion
+        public string temporary;
+       #endregion
 
         public AddDocumentPage()
         {
@@ -48,7 +52,7 @@ namespace Structure.View
             DocumentService = new DocumentService();
             CarouselList = new ObservableCollection<Document>();
             InitializeComponent();
-           
+            SetLanguage();
             ResetLayout(true);
             HandleView();
 
@@ -77,7 +81,10 @@ namespace Structure.View
 
             carouselItem.Comments = MyEntry._editor.Text;
 
-            carouselItem.Sent = await DocumentService.PostDocument(carouselItem, clientKey);
+            var position = DependencyService.Get<ILocationService>().GetLocation();
+            position.ClientKey = clientKey;
+
+            carouselItem.Sent = await DocumentService.PostDocument(carouselItem, clientKey , position);
                  
             var docID = DatabaseAccess.CreateDocument(carouselItem);
             
@@ -87,9 +94,18 @@ namespace Structure.View
         }
         #endregion
 
+        public void  HandleTranslation(string cultureInfo)
+        {
+            temporary =  Localize.GetString(Constants.Temporary, cultureInfo);
+        }
+        public void SetLanguage()
+        {
+            CultureInfo = DatabaseAccess.GetCultureInfo();
+            HandleTranslation(CultureInfo);
+        }
         public void HandleView()
         {
-            var items = DatabaseAccess.ReadAllDocuments().Where(x => x.Type == "Temporary").ToList();
+            var items = DatabaseAccess.ReadAllDocuments().Where(x => x.Type == temporary).ToList();
             
             if (items.Count == 0 && CarouselList.Count == 0)
             {
@@ -99,6 +115,8 @@ namespace Structure.View
             else
             {
                 ShowTakePhoto(false);
+                BtnSave.IsVisible = false;
+                BtnSave.IsEnabled = false;
                 CarouselList =new ObservableCollection<Document>(items);
             }
           
@@ -108,16 +126,16 @@ namespace Structure.View
         {
            
             BtnAddPhoto.IsVisible = value;
-            MainContent.IsEnabled = !value;
+            SubContent.IsEnabled = !value;
             BtnSave.IsVisible = !value;
             BtnSave.IsEnabled = !value;
             if (value)
             {
-                MainContent.Opacity = 0;
+                SubContent.Opacity = 0;
             }
             else
             {
-                MainContent.Opacity = 1;
+                SubContent.Opacity = 1;
 
             }
 
@@ -147,9 +165,10 @@ namespace Structure.View
                     var newDoc = new Document
                     {
                         Name = "Document" + DateTime.UtcNow.ToString(),
+                        FileName = "Document" + DateTime.UtcNow.ToString(),
                         FilePath = file.Path.ToString(),
                         Data = base64,
-                        Type =  "Temporary",
+                        Type =  temporary,
                     };
 
                     CarouselList.Add(newDoc);
@@ -165,31 +184,37 @@ namespace Structure.View
 
 
         }
+
         public void DiableCarousel()
         {
-            ShowTakePhoto(false);
-            var currentItem = CarouselList[Position];
+            var items = DatabaseAccess.ReadAllDocuments().Where(x => x.Type == temporary).ToList();
 
-            if (currentItem.Sent)
+            if (items.Count != 0 && CarouselList.Count != 0)
             {
-              
-                BtnSave.IsEnabled = false;
-                BtnSave.IsVisible = false;
+                ShowTakePhoto(false);
+                var currentItem = CarouselList[Position];
 
-                MyCarousel.IsEnabled = true;
+                if (currentItem.Sent)
+                {
 
-                BtnTakePhoto.IsEnabled = true;
-                BtnTakePhoto.IsVisible = true;
-            }
-            else
-            {
-                MyCarousel.IsEnabled = false;
+                    BtnSave.IsEnabled = false;
+                    BtnSave.IsVisible = false;
 
-                BtnTakePhoto.IsEnabled = false;
-                BtnTakePhoto.IsVisible = false;
+                    MyCarousel.IsEnabled = true;
 
-                BtnSave.IsEnabled = true;
-                BtnSave.IsVisible = true;
+                    BtnTakePhoto.IsEnabled = true;
+                    BtnTakePhoto.IsVisible = true;
+                }
+                else
+                {
+                    MyCarousel.IsEnabled = false;
+
+                    BtnTakePhoto.IsEnabled = false;
+                    BtnTakePhoto.IsVisible = false;
+
+                    BtnSave.IsEnabled = true;
+                    BtnSave.IsVisible = true;
+                }
             }
         }
         public void SaveManyDocuments(ObservableCollection<Document> documents)

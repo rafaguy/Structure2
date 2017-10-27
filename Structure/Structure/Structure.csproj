@@ -45,13 +45,13 @@
       <DependentUpon>OutgoingViewCell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\DatabaseAccess.cs" />
-    <Compile Include="Data\DataFactory.cs" />
     <Compile Include="Extensions\ExtendedLabel.cs" />
     <Compile Include="Extensions\HtmlLabel.cs" />
     <Compile Include="Extensions\WebViewExtended.cs" />
     <Compile Include="Interface\IDocumentService.cs" />
     <Compile Include="Interface\IFileMgr.cs" />
     <Compile Include="Interface\IFileOpener.cs" />
+    <Compile Include="Interface\IForgotPasswordEmail.cs" />
     <Compile Include="Interface\ILocationService.cs" />
     <Compile Include="Interface\ILoginService.cs" />
     <Compile Include="Interface\ISaveFile.cs" />
@@ -92,6 +92,7 @@
     <Compile Include="Utils\CarouselIndicators.cs" />
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\CustomProgressBar.cs" />
+    <Compile Include="Utils\GlobalCommunicationDataSource.cs" />
     <Compile Include="Utils\Grouping.cs" />
     <Compile Include="Utils\ImageWithTouch.cs" />
     <Compile Include="Utils\Localize.cs" />
@@ -310,10 +311,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\addCom.png" />
-    <Content Include="Images\addCommunication.png" />
-    <Content Include="Images\clock.png" />
-    <Content Include="Images\message-closed-envelope.png" />
+    <EmbeddedResource Include="Images\addCom.png" />
+    <EmbeddedResource Include="Images\addCommunication.png" />
+    <EmbeddedResource Include="Images\clock.png" />
+    <EmbeddedResource Include="Images\collapsed_blue.png" />
+    <EmbeddedResource Include="Images\message-closed-envelope.png" />
     <EmbeddedResource Include="Images\Chat_Selected.png" />
     <EmbeddedResource Include="Images\Document_Selected.png" />
     <EmbeddedResource Include="Images\Gear_selected.png" />
@@ -352,6 +354,14 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Download.png" />
+    <EmbeddedResource Include="Images\executive.png" />
+    <Content Include="Images\Files.png" />
+    <Content Include="Images\header.png" />
+    <Content Include="Images\LblArrow.png" />
+    <EmbeddedResource Include="Images\orange.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.4.0.282\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.4.0.282\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />

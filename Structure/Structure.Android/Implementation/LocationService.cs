@@ -31,10 +31,10 @@ namespace Structure.Droid.Implementation
         /// </summary>
         public LocationService()
         {
+            CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Location });
 
             Location GpsLocation; 
             Location NetworkLocation;
-            CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Location });
             _locationManager = (LocationManager) Forms.Context.GetSystemService(Context.LocationService);
             InitLocation();
             InitLocation();

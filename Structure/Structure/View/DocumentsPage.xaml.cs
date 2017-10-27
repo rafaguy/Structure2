@@ -27,9 +27,12 @@ namespace Structure.View
 		{
             DatabaseAccess = new DatabaseAccess();
             DocumentService = new DocumentService();
-            InitializeComponent ();
-           // HandleDocumentDownload().Wait();
             
+            InitializeComponent ();
+
+           
+           // HandleDocumentDownload().Wait();
+
 
         }
         protected async override void OnAppearing()
@@ -37,6 +40,7 @@ namespace Structure.View
             ResetLayout(false);
             BindingContext = _mainViewModel;
             await HandleDocumentDownload();
+            
             base.OnAppearing();
         }
 
@@ -46,7 +50,13 @@ namespace Structure.View
             Navigation.PushAsync(new AddDocumentPage());
 
         }
+        private void ExpanClicked(object sender, System.EventArgs e)
+        {
+            var x = sender as TapGestureRecognizer;
+             x.Command = _mainViewModel.HeaderSelectedCommand;
 
+            /* Command="{Binding Source={x:Reference TheDocumentsPage}, Path=BindingContext.HeaderSelectedCommand}"*/
+        }
         private void ArrowBack_Clicked(object sender, System.EventArgs e)
         {
             var x = Navigation.NavigationStack;
@@ -85,51 +95,21 @@ namespace Structure.View
         {
             ActivityLayout.IsVisible = !status;
             ActivityLayout.IsRunning = !status;
-            MainContent.IsEnabled = status;
+            //MainContent.IsEnabled = status;
             if (status)
             {
-                MainContent.Opacity = 1;
+              //  MainContent.Opacity = 1;
             }
             else
             {
-                MainContent.Opacity = 0.4;
+            //    MainContent.Opacity = 0.4;
 
             }
         }
 
         #region DocumentService
 
-        public async Task<bool> SaveDocumentToDB()
-        {
-            List<Document> docsToAdd = new List<Document>();
-            try
-            {
-                var clientKey = DatabaseAccess.GetClientKey();
-                var documentList = await DocumentService.GetDocuments(clientKey);
-                foreach (var item in documentList)
-                {
-                    var filePath = await DependencyService.Get<IFileMgr>().Base64ToFile(item.Data, item.Name);
-                    var position = DependencyService.Get<ILocationService>().GetLocation();
-                    item.FilePath = filePath;
-                    item.Longitude = position.Longitude;
-                    item.Latitude = position.Latitude;
-
-                    docsToAdd.Add(item);
-                }
-                
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-         
-
-            DatabaseAccess.CreateManyDocuments(docsToAdd);
-            return true;
-
-        }
-
+       
         #endregion
 
         #region Footer Navigations

@@ -15,6 +15,6 @@ namespace Structure.Interface
         /// <returns></returns>
         string GetBase64ImageString(string filename);
 
-        Task<string> Base64ToFile(string base64String, string fileName);
+        Task<string> Base64ToFile(string base64String, string fileName,string extension);
     }
 }

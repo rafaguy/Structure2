@@ -1,4 +1,5 @@
-﻿using Structure.ViewModel;
+﻿using Structure.Utils;
+using Structure.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,24 +20,39 @@ namespace Structure.View
         public MessagingPage(Notification notif=null)
         {
             InitializeComponent();
-            BindingContext = vm = new MessagingPageViewModel(activityIndicatotr);
+            BindingContext = vm = new MessagingPageViewModel();
             this.notification = notif;
         }
         protected override async void OnAppearing()
         {
             // base.OnAppearing();
-          await  (BindingContext as MessagingPageViewModel).loadCommunication();
+         if(GlobalCommunicationDataSource.Messages==null)
+            {
+                activityIndicatotr.IsVisible = true;
+                activityIndicatotr.IsRunning = true;
+               await (BindingContext as MessagingPageViewModel).loadCommunication();
+                activityIndicatotr.IsVisible = false;
+                activityIndicatotr.IsRunning = false;
+            }
             if(notification !=null)
             {
-                var listviewItemSource = (BindingContext as MessagingPageViewModel).Messages;
-                var item = listviewItemSource.Single(m => m.Date.Equals(notification.Date) && m.Auteur.Equals(notification.NotificationText));
-                item.Color = Color.Blue;
-                MessagesListView.ScrollTo(item, ScrollToPosition.Start, true);
-               
-                //MessagesListView.SelectedItem = item;
+
+                try 
+                {
+                    var listviewItemSource = (BindingContext as MessagingPageViewModel).Messages;
+                    var item = listviewItemSource.Single(m => m.Date.Ticks.Equals(notification.Date.Ticks) && m.Auteur.Equals(notification.NotificationText));
+                    item.Color = Color.Blue;
+                    MessagesListView.ScrollTo(item, ScrollToPosition.Start, true);
+
+
+                }
+                catch(Exception e)
+                {
+                    
+                }
+              
+                           
             }
-
-
         }
        
     }

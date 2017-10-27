@@ -168,5 +168,14 @@ namespace Structure.Resource {
                 return ResourceManager.GetString("save", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temporary.
+        /// </summary>
+        internal static string temporary {
+            get {
+                return ResourceManager.GetString("temporary", resourceCulture);
+            }
+        }
     }
 }

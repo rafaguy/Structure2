@@ -11,26 +11,65 @@
         <AbsoluteLayout x:Name="ConfigurationPageLayout" BackgroundColor="White">
             <StackLayout x:Name="MainContent"  >
                 <!--Header-->
-                   <Image
+                <Grid ColumnSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="135" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image
+                           x:Name="logo"
+                           Source="orange.png"
+                           Grid.Column="0" 
+                           Grid.Row="0" 
+                           HeightRequest="90" />
+                    
+                    <Image 
+                           x:Name="logo1"
+                           Source="header.png"  
+                           Grid.Column="1"
+                           Grid.Row="0" 
+                           HeightRequest="90" 
+                           Aspect="Fill"/>
+
+
+
+                    <!--<Image 
                        HeightRequest="70"
-                        x:Name="logo"
+                        
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Source="orange.png"
+                        Aspect="AspectFit"
+                        WidthRequest="50"
+                    />
+                    <Image 
+                       HeightRequest="90"
+                        x:Name="logo1"
                         Grid.Row="0"
                         Grid.Column="1"
-                        Aspect="AspectFit"
                         Source="header.png"
-                    />
+                  
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        BackgroundColor="Black"
+                    />-->
+                </Grid>
 
+              
 
-                    <!--Header End-->
+                <!--Header End-->
                 <StackLayout>
                     <Label
                     x:Name="LblConfig"
                     FontAttributes="Bold"
-                    FontSize="13"
+                    Margin="30"
+                    FontSize="22"
                     HorizontalTextAlignment="Center"
                     Text="CONFIGURATION"
                     TextColor="{StaticResource BlackTextColor}"
                     VerticalTextAlignment="Center" />
+                    
                     
                     <Grid x:Name="FooterGrid" Margin="10,0,0,0" >
                         <Grid.ColumnDefinitions>
@@ -41,7 +80,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
-                            <RowDefinition Height="16" />
+                            <RowDefinition Height="50" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
@@ -49,14 +88,13 @@
 			                x:Name="LblLogin"
 			                FontAttributes="Bold"
 			                FontFamily="OpenSans"
-			                FontSize="14"
+			                FontSize="17"
 			                Text="Login"
 			                TextColor="{StaticResource BlackTextColor}"
 			                VerticalOptions="Center" 
                             HorizontalOptions="Start"
 			                Grid.Row="0"
 			                Grid.Column="0"
-                            
 			             />
 
                         <local:MyEntry
@@ -81,7 +119,7 @@
 			                x:Name="LblPassword"
 			                FontAttributes="Bold"
 			                FontFamily="OpenSans"
-			                FontSize="14"
+			                FontSize="17"
                             HorizontalOptions="Start"
 			                Text="Password"
 			                TextColor="{StaticResource BlackTextColor}"
@@ -92,7 +130,7 @@
 
                         <local:MyEntry
 			                x:Name="TxtPassword"
-			                Placeholder="Password"
+			                Placeholder="********"
                             IsPassword="True"
                             WidthRequest="200"
                             HorizontalTextAlignment="End"
@@ -108,29 +146,32 @@
                                Grid.Column="2"
                                />
                         <StackLayout
-                            Margin="10,0,0,0"
-                            BackgroundColor="White"
+                            
+                            
                             Orientation="Horizontal"
                             Grid.Row="2"
 			                Grid.Column="0"
                             Grid.ColumnSpan="3"
-                            HeightRequest="18"
+                            HeightRequest="25"
                             
                             >
-                            <Label
+                            <Button
                                 
-                                x:Name="lblPasswordLost"
-                                FontSize="14"
+                                x:Name="BtnPasswordLost"
+                                Clicked="BtnPasswordLost_Clicked"
+                                BackgroundColor="White"
                                 Text="Password Lost"
-                                TextColor="DarkBlue">
+                                TextColor="{StaticResource RedTextColor}"
+                              
+                                >
                                       
-                            </Label>
+                            </Button>
                         </StackLayout>
                         <Label
 			                x:Name="LblLanguage"
-			                FontAttributes="Bold"
+                            FontAttributes="Bold"
 			                FontFamily="OpenSans"
-			                FontSize="14"
+			                FontSize="17"
                             WidthRequest="200"
 			                HorizontalOptions="Start"
 			                Text="Language"
@@ -159,17 +200,25 @@
                                Grid.Column="2"
                                />
 
-                    </Grid>
-                    
-            
-                    <StackLayout HorizontalOptions="Center">
-                        <Button
-                            WidthRequest="100"
+                        <Button 
+                                WidthRequest="200"
                                 x:Name="LoginBtn"
                                 BackgroundColor="{StaticResource RedTextColor}"
                                 Clicked="LoginBtn_Clicked"
                                 Text="Save"
-                                TextColor="White" />
+                                TextColor="White"
+                                Grid.Row="4"
+			                    Grid.Column="0" 
+                                Grid.ColumnSpan="3"
+                                HorizontalOptions="Center"
+                            Margin="70,0,0,0"
+                               
+                                />
+                    </Grid>
+                    
+            
+                    <StackLayout >
+                        
                     </StackLayout>
                    
                 </StackLayout>

@@ -11,14 +11,21 @@ namespace Structure.Droid.Implementation
 {
     public class SaveFile : ISaveFile
     {
+        public SaveFile()
+        {
+             
+
+        }
         public async Task<string> SaveText(string filename, byte[] text)
         {
+            await CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Storage });
+            await CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Location });
+
             var dir = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDcim);
             //var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var documentsPath = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDocuments).AbsolutePath;
 
             var filePath = Path.Combine(documentsPath, filename);
-           await  CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { Plugin.Permissions.Abstractions.Permission.Storage });
 
             File.WriteAllBytes(filePath, text);
 

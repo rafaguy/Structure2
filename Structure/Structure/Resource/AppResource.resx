@@ -153,4 +153,7 @@
   <data name="save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="temporary" xml:space="preserve">
+    <value>Temporary</value>
+  </data>
 </root>

@@ -57,5 +57,34 @@ namespace Structure.Service
 
             return "KO";
         }
+
+        public async Task<string> PostPasswordLost(string clientKey)
+        {
+            try
+            {
+                using (var client = new RestClient(new Uri("https://api-tray.intragest.info/api/")))
+                {
+                    client.Authenticator = new HttpBasicAuthenticator(Constants.ApiUserName, Constants.ApiPassword);
+                    var request = new RestRequest("MobilePostPwdLost", Method.POST);
+                    request.AddQueryParameter("clientKey", clientKey);
+
+                    var result = await client.Execute(request);
+
+                    if (result.Content != null)
+                    {
+                        
+                       return "OK";
+
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return "KO";
+        }
     }
 }
