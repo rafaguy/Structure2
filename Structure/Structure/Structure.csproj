@@ -48,12 +48,13 @@
     <Compile Include="Extensions\ExtendedLabel.cs" />
     <Compile Include="Extensions\HtmlLabel.cs" />
     <Compile Include="Extensions\WebViewExtended.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interface\IDocumentService.cs" />
     <Compile Include="Interface\IFileMgr.cs" />
     <Compile Include="Interface\IFileOpener.cs" />
-    <Compile Include="Interface\IForgotPasswordEmail.cs" />
     <Compile Include="Interface\ILocationService.cs" />
     <Compile Include="Interface\ILoginService.cs" />
+    <Compile Include="Interface\IPageNotification.cs" />
     <Compile Include="Interface\ISaveFile.cs" />
     <Compile Include="Interface\ISqLiteDb.cs" />
     <Compile Include="Model\Category.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Model\LocationModel.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Notification.cs" />
+    <Compile Include="Model\StructureExceptionModel.cs" />
     <Compile Include="Resource\AppResource.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -91,15 +93,13 @@
     <Compile Include="Utils\CarouselEntry.cs" />
     <Compile Include="Utils\CarouselIndicators.cs" />
     <Compile Include="Utils\Constants.cs" />
-    <Compile Include="Utils\CustomProgressBar.cs" />
     <Compile Include="Utils\GlobalCommunicationDataSource.cs" />
     <Compile Include="Utils\Grouping.cs" />
-    <Compile Include="Utils\ImageWithTouch.cs" />
     <Compile Include="Utils\Localize.cs" />
     <Compile Include="Utils\MyEntry.cs" />
-    <Compile Include="Utils\UnderlineEffect.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\ConfigurationPageViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MessagingPageViewModel.cs" />
     <Compile Include="ViewModel\Notification.cs" />

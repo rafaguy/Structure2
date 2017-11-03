@@ -36,9 +36,9 @@ namespace Structure.Droid.Implementation
                 res = Convert.ToBase64String(b);
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
-                throw e;                
+                return null;                
             }
             return res;
         }
@@ -46,17 +46,25 @@ namespace Structure.Droid.Implementation
         public async Task<string> Base64ToFile(string base64String , string fileName,string extension)
         {
            
-            string res = null;
-
+         
             try
             {
                 byte[] b = Convert.FromBase64String(base64String);
                 return await FileSaver.SaveText(fileName+extension, b);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                DatabaseAccess data = new DatabaseAccess();
+                data.CreateException(new StructureExceptionModel
+                {
+                    Message = e.Message,
+                    MethodName = e.Source,
+                    StackTrace = e.StackTrace,
+                    TimeSpan = DateTime.Today.ToString(System.Globalization.CultureInfo.CurrentCulture)
 
-                throw ex;
+                });
+                return null;
+                
             }
       
 

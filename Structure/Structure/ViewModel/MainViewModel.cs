@@ -13,11 +13,13 @@ using Xamarin.Forms.Internals;
 
 namespace Structure.ViewModel
 {
-    public class MainViewModel :BaseViewModel
+    public class MainViewModel :BaseViewModel,IPageNotification
     {
         ObservableCollection<Grouping<SelectCategoryViewModel, Document>> _Categories;
 
         private string _ExtentedImageValue;
+        private int _count;
+
         public string ExtentedImageValue
         {
             get { return _ExtentedImageValue; }
@@ -42,7 +44,7 @@ namespace Structure.ViewModel
                     g.Key.Selected = !g.Key.Selected;
                     if (g.Key.Selected)
                     {
-                       ExtentedImageValue = "expanded_blue.png";
+                     
                        DataDocuments.Where(i => (i.Type == g.Key.Category))
                                       .ForEach(g.Add);
 
@@ -50,13 +52,29 @@ namespace Structure.ViewModel
                     else
                     {
                         g.Clear();
-                        ExtentedImageValue = "collapsed_blue.png";
+                        
                     }
                 });
             }
         }
         public DatabaseAccess DatabaseAccess { get; set; }
         public DocumentService DocumentService { get; set; }
+
+
+        public int NewComCount
+        {
+            get { return _count; }
+            set
+            {
+                if(_count!=value)
+                {
+                    _count = value;
+                    OnPropertyChanged();
+                }
+            }
+          
+           
+        }
 
         public MainViewModel()
         {
@@ -83,8 +101,8 @@ namespace Structure.ViewModel
         {
             List<Document> docsToAdd = new List<Document>();
 
-          //  var clientKey = DatabaseAccess.GetClientKey();
-            var documentList = await DocumentService.GetDocuments("12345");
+            var clientKey = DatabaseAccess.GetClientKey();
+            var documentList = await DocumentService.GetDocuments(clientKey);
             foreach (var item in documentList)
             {
 
@@ -96,9 +114,9 @@ namespace Structure.ViewModel
                 {
                     item.Name = "No Name";
                 }
-                //var filePath = await DependencyService.Get<IFileMgr>().Base64ToFile(item.Data, item.Name,item.Extension);
+                var filePath = await DependencyService.Get<IFileMgr>().Base64ToFile(item.Data, item.Name,item.Extension);
             
-               // item.FilePath = filePath;
+                item.FilePath = filePath;
 
 
                 docsToAdd.Add(item);

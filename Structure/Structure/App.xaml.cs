@@ -1,5 +1,6 @@
 ﻿using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
+using Structure.Interface;
 using Structure.Utils;
 using Structure.View;
 using Structure.ViewModel;
@@ -18,29 +19,27 @@ namespace Structure
             InitializeComponent();
 
             MainPage = new NavigationPage(new ConfigurationPage());
-            Device.StartTimer(TimeSpan.FromMinutes(5), () =>  UpdateListNotification());
-          //  Properties["old"] = 0;
+            UpdateListNotification();
+            Device.StartTimer(TimeSpan.FromMinutes(1), () =>  UpdateListNotification());
+         
         }
+        // This Method is called every 5 min, wich the API for the new Notification and Communication
+        //GlobalCommunicationDataSource.Messages is the listview item source for le NotificationCommunicationPage
 
-        private   bool UpdateListNotification()
+        private bool UpdateListNotification()
         {
-           Task t= Task.Run(async () => GlobalCommunicationDataSource.Messages = await MessagingPageViewModel.getListCommunication());
+           Task.Run(async () => { GlobalCommunicationDataSource.Messages = await MessagingPageViewModel.getListCommunication();
+               GlobalCommunicationDataSource.CommunicationNumberNotViewed = GlobalCommunicationDataSource.Messages.Where(x => x.Position.Equals("L")).Count();
+               Application.Current.Properties["NumberNotViewed"] = GlobalCommunicationDataSource.CommunicationNumberNotViewed;
+               Application.Current.Properties["NumberViewed"] = GlobalCommunicationDataSource.CommunicationNumberViewed;
+               if (GlobalCommunicationDataSource.CommunicationNumberNotViewed != GlobalCommunicationDataSource.CommunicationNumberViewed)
+               {
+                   (CurrentPage.BindingContext as IPageNotification).NewComCount = GlobalCommunicationDataSource.CommunicationNumberNotViewed - GlobalCommunicationDataSource.CommunicationNumberViewed;
+               }
+           });
             Task.Run(async () => GlobalCommunicationDataSource.Notification = await NotificationCommunicationPage.getListNotification());
             
-
-          /*  if(t.IsCompleted)
-            {
-                Properties["newCom"] = GlobalCommunicationDataSource.Messages.Where(x => x.Position.Equals("L")).ToList().Count;
-                if ((int)Properties["newCom"] != (int)Properties["old"])
-                {
-
-                    Properties["count"] = (int)Properties["newCom"] - (int)Properties["old"];
-                    Properties["old"] = Properties["newCom"];
-                }
-            }
-            */
-
-
+          
             return true;
         }
 
@@ -55,7 +54,14 @@ namespace Structure
         }
 
         protected override void OnStart()
+
         {
+            if (Application.Current.Properties.ContainsKey("NumberNotViewed")  && Application.Current.Properties.ContainsKey("NumberViewed"))
+            {
+                GlobalCommunicationDataSource.CommunicationNumberNotViewed = (int)Application.Current.Properties["NumberNotViewed"];
+                GlobalCommunicationDataSource.CommunicationNumberViewed = (int)Application.Current.Properties["NumberViewed"];
+            }
+
             // Handle when your app starts  
             CrossConnectivity.Current.ConnectivityChanged += HandleConnectivityChanged;
         }
@@ -73,6 +79,11 @@ namespace Structure
         protected override void OnResume()
         {
             // Handle when your app resumes
+            if (Application.Current.Properties.ContainsKey("NumberNotViewed") && Application.Current.Properties.ContainsKey("NumberViewed"))
+            {
+                GlobalCommunicationDataSource.CommunicationNumberNotViewed = (int)Application.Current.Properties["NumberNotViewed"];
+                GlobalCommunicationDataSource.CommunicationNumberViewed = (int)Application.Current.Properties["NumberViewed"];
+            }
         }
     }
 }

@@ -17,15 +17,17 @@ namespace Structure.iOS.Implementation
 {
     public class SaveFile  : ISaveFile
     {
-        public async Task<string> SaveText(string name, byte[] text)
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        public async Task<string> SaveText(string filename, byte[] text)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             var documents =
             Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var filename = Path.Combine(documents, name);
+            var file = Path.Combine(documents, filename);
 
-            File.WriteAllBytes(filename, text);
+            File.WriteAllBytes(file, text);
 
-            var fullpath = documents + name;
+            var fullpath = documents + file;
 
             return fullpath;
         }

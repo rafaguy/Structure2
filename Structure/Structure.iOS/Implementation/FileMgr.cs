@@ -15,6 +15,10 @@ namespace Structure.iOS.Implementation
     {
         public SaveFile FileSaver { get; set; }
 
+        public FileMgr()
+        {
+            FileSaver = new SaveFile();
+        }
         /// <summary>
         /// Gets the base64 image string.
         /// </summary>

@@ -19,17 +19,17 @@ using Structure.Utils;
 namespace Structure.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddDocumentPage : ContentPage ,INotifyPropertyChanged
+    public partial class AddDocumentPage : ContentPage ,INotifyPropertyChanged,IPageNotification
     {
 
         #region Properties
-        public int _position;
+        private int _position;
         public int Position
         {
             get { return _position; }
             set { SetValue(ref _position, value); }
         }
-        public ObservableCollection<Document> _carouselList;
+        private ObservableCollection<Document> _carouselList;
         public ObservableCollection<Document> CarouselList
         {
             get { return _carouselList; }
@@ -41,13 +41,37 @@ namespace Structure.View
         public DatabaseAccess DatabaseAccess { get; set; }
 
         public DocumentService DocumentService { get; set; }
+        public int NewComCount
+        {
+            get
+            {
+                return _count;
+            }
+            set
+            {
+                if(_count!=value)
+                {
+                    _count = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        public string temporary;
-       #endregion
 
+        #endregion
+
+        #region Private Variables
+
+        private string _temporary;
+        private int _count;
+        private string _takePhoto;
+        private string _noPhoto;
+        private string _ok;
+        #endregion
         public AddDocumentPage()
         {
             BindingContext = this;
+            NewComCount = GlobalCommunicationDataSource.CurrentNewComNumber;
             DatabaseAccess = new DatabaseAccess();
             DocumentService = new DocumentService();
             CarouselList = new ObservableCollection<Document>();
@@ -59,22 +83,38 @@ namespace Structure.View
         }
 
         #region Clicked Events
+        private void BtnDeletePhoto_Clicked(object sender, EventArgs e)
+        {
+            var displayItem = CarouselList[Position];
+
+            var dbItem = DatabaseAccess.ReadDocument(displayItem.Id);
+            if (dbItem != null)
+            {
+                DatabaseAccess.DeleteDocument(dbItem);
+            }
+            CarouselList.Remove(displayItem);
+            if (CarouselList.Count == 0)
+            {
+                ShowTakePhoto(true);
+            }
+        }
         private async void BtnTakePhoto_Clicked(object sender, EventArgs e)
         {
             await TakePhoto();
             DiableCarousel();
         }
 
+
        
         private void ArrowBack_Clicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();
         }
-
-        private async Task BtnSave_Clicked(object sender, EventArgs e)
+        //BtnSave_Clicked
+        private async void BtnSave_Clicked(object sender, EventArgs e)
         {
 
-            string clientKey = "6FDFDD074B4BD30209085207575E5D0D"; //DatabaseAccess.GetClientKey();
+            string clientKey = DatabaseAccess.GetClientKey();
             ResetLayout(false);
 
             var carouselItem = CarouselList[Position];
@@ -86,7 +126,7 @@ namespace Structure.View
 
             carouselItem.Sent = await DocumentService.PostDocument(carouselItem, clientKey , position);
                  
-            var docID = DatabaseAccess.CreateDocument(carouselItem);
+            DatabaseAccess.CreateDocument(carouselItem);
             
             ResetLayout(true);
 
@@ -96,7 +136,10 @@ namespace Structure.View
 
         public void  HandleTranslation(string cultureInfo)
         {
-            temporary =  Localize.GetString(Constants.Temporary, cultureInfo);
+            _temporary =  Localize.GetString(Constants.Temporary, cultureInfo);
+            _noPhoto = Localize.GetString(Constants.NoPhoto,cultureInfo);
+            _takePhoto = Localize.GetString(Constants.TakePhoto, cultureInfo);
+            _ok = Localize.GetString(Constants.ok, cultureInfo);
         }
         public void SetLanguage()
         {
@@ -105,7 +148,7 @@ namespace Structure.View
         }
         public void HandleView()
         {
-            var items = DatabaseAccess.ReadAllDocuments().Where(x => x.Type == temporary).ToList();
+            var items = DatabaseAccess.ReadAllDocuments().Where(x => x.Type == _temporary).ToList();
             
             if (items.Count == 0 && CarouselList.Count == 0)
             {
@@ -126,16 +169,16 @@ namespace Structure.View
         {
            
             BtnAddPhoto.IsVisible = value;
-            SubContent.IsEnabled = !value;
+            MainContent.IsEnabled = !value;
             BtnSave.IsVisible = !value;
             BtnSave.IsEnabled = !value;
             if (value)
             {
-                SubContent.Opacity = 0;
+                MainContent.Opacity = 0;
             }
             else
             {
-                SubContent.Opacity = 1;
+                MainContent.Opacity = 1;
 
             }
 
@@ -159,37 +202,35 @@ namespace Structure.View
                 if (file != null)
                 {
                     System.Diagnostics.Debug.WriteLine(file.Path + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>+++++++++++========+++++++++++<<<<<<<<<<<<< ");
-                    //DocImage.Source = file.Path;
-                    await DisplayAlert("Success", "Saved to: " + file.Path, "OK");
                     var base64 = DependencyService.Get<IFileMgr>().GetBase64ImageString(file.Path);
                     var newDoc = new Document
                     {
-                        Name = "Document" + DateTime.UtcNow.ToString(),
-                        FileName = "Document" + DateTime.UtcNow.ToString(),
+                        Name = "Document " + DateTime.UtcNow.ToString(),
+                        FileName = "Document " + DateTime.UtcNow.ToString(),
                         FilePath = file.Path.ToString(),
                         Data = base64,
-                        Type =  temporary,
+                        Type =  _temporary,
                     };
 
                     CarouselList.Add(newDoc);
                     Position = CarouselList.Count - 1;
-                    
+                    DiableCarousel();
                 }
                 else
                 {
-                    await DisplayAlert("Failed", "No Photo Taken", "OK");
+                    await DisplayAlert(_takePhoto, _noPhoto, _ok);
                 }
             }
-            DiableCarousel();
+            
 
 
         }
 
         public void DiableCarousel()
         {
-            var items = DatabaseAccess.ReadAllDocuments().Where(x => x.Type == temporary).ToList();
+            var items = DatabaseAccess.ReadAllDocuments().Where(x => x.Type == _temporary).ToList();
 
-            if (items.Count != 0 && CarouselList.Count != 0)
+            if (items.Count != 0 || CarouselList.Count != 0)
             {
                 ShowTakePhoto(false);
                 var currentItem = CarouselList[Position];
@@ -242,9 +283,13 @@ namespace Structure.View
         }
 
         #region PropertyCHanged Event
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
 
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         protected void OnPropertyChanged([CallerMemberName]string propertyName = null)
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -287,8 +332,11 @@ namespace Structure.View
             Navigation.PushAsync(new HomePage());
         }
 
+
         #endregion
 
-        
+       
+
+       
     }
 }

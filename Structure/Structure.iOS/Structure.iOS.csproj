@@ -92,9 +92,9 @@
   <ItemGroup>
     <Compile Include="CustomRenderer\HtmlLabelRenderer.cs" />
     <Compile Include="CustomRenderer\LabelExtendedRenderer.cs" />
+    <Compile Include="CustomRenderer\WebViewExtendRenderer.cs" />
     <Compile Include="Implementation\FileMgr.cs" />
     <Compile Include="Implementation\FileOpener.cs" />
-    <Compile Include="Implementation\ForgotPasswordEmail.cs" />
     <Compile Include="Implementation\LocationService.cs" />
     <Compile Include="Implementation\SaveFile.cs" />
     <Compile Include="Implementation\SqLiteDb.cs" />
@@ -127,6 +127,10 @@
     <BundleResource Include="Resources\Icon-Small%402x.png" />
     <BundleResource Include="Resources\Icon-Small%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\Gear_selected.png" />
+    <BundleResource Include="Resources\Home_Selected.png" />
+    <BundleResource Include="Resources\i_Selected.png" />
+    <BundleResource Include="Resources\header1.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -208,7 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Structure\Structure.csproj">
-      <Project>{a7f2081d-301a-4c06-b17f-83bf36ade9df}</Project>
+      <Project>{F51D2DF9-5BA7-4A55-B960-B1FFD811E4D5}</Project>
       <Name>Structure</Name>
     </ProjectReference>
   </ItemGroup>
@@ -370,6 +374,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\DocIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

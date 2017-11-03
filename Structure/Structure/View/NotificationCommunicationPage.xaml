@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Structure.View.NotificationCommunicationPage"
@@ -135,7 +135,7 @@
                             Grid.Column="1"
                             BackgroundColor="White"
                             BorderColor="White"
-                            Text="(1)"
+                            Text="{Binding NewComCount,StringFormat='({0})'}"
                             Clicked="BtnComm_Clicked"
                                         />
                     <Button x:Name="BtnHelp"
@@ -170,6 +170,7 @@
                     BorderRadius="50"
                     HeightRequest="100"
                     BorderWidth="1"
+                    BorderColor="Transparent"
                     MinimumHeightRequest="100"
                     WidthRequest="100"
                     MinimumWidthRequest="100"

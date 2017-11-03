@@ -62,11 +62,47 @@ namespace Structure.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add A Document.
+        /// </summary>
+        internal static string addDocument {
+            get {
+                return ResourceManager.GetString("addDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add A Message.
+        /// </summary>
+        internal static string addMessage {
+            get {
+                return ResourceManager.GetString("addMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Communication.
+        /// </summary>
+        internal static string communication {
+            get {
+                return ResourceManager.GetString("communication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CONFIGURATION.
         /// </summary>
         internal static string configuration {
             get {
                 return ResourceManager.GetString("configuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document.
+        /// </summary>
+        internal static string document {
+            get {
+                return ResourceManager.GetString("document", resourceCulture);
             }
         }
         
@@ -134,6 +170,24 @@ namespace Structure.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Photo Taken.
+        /// </summary>
+        internal static string noPhoto {
+            get {
+                return ResourceManager.GetString("noPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        internal static string notification {
+            get {
+                return ResourceManager.GetString("notification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ok.
         /// </summary>
         internal static string ok {
@@ -166,6 +220,15 @@ namespace Structure.Resource {
         internal static string save {
             get {
                 return ResourceManager.GetString("save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take Photo.
+        /// </summary>
+        internal static string takePhoto {
+            get {
+                return ResourceManager.GetString("takePhoto", resourceCulture);
             }
         }
         

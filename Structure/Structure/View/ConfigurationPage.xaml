@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Structure.Utils"
@@ -19,56 +19,33 @@
 
                     <Image
                            x:Name="logo"
-                           Source="orange.png"
+                         
                            Grid.Column="0" 
                            Grid.Row="0" 
                            HeightRequest="90" />
                     
                     <Image 
                            x:Name="logo1"
-                           Source="header.png"  
+                           Source="header1.png"  
                            Grid.Column="1"
                            Grid.Row="0" 
                            HeightRequest="90" 
-                           Aspect="Fill"/>
-
-
-
-                    <!--<Image 
-                       HeightRequest="70"
-                        
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Source="orange.png"
-                        Aspect="AspectFit"
-                        WidthRequest="50"
-                    />
-                    <Image 
-                       HeightRequest="90"
-                        x:Name="logo1"
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        Source="header.png"
-                  
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        BackgroundColor="Black"
-                    />-->
+                           Aspect="AspectFit"/>
                 </Grid>
-
-              
 
                 <!--Header End-->
                 <StackLayout>
                     <Label
                     x:Name="LblConfig"
                     FontAttributes="Bold"
+                    FontFamily="OpenSans"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    FontSize="15"
                     Margin="30"
-                    FontSize="22"
-                    HorizontalTextAlignment="Center"
                     Text="CONFIGURATION"
                     TextColor="{StaticResource BlackTextColor}"
-                    VerticalTextAlignment="Center" />
+                     />
                     
                     
                     <Grid x:Name="FooterGrid" Margin="10,0,0,0" >
@@ -88,7 +65,7 @@
 			                x:Name="LblLogin"
 			                FontAttributes="Bold"
 			                FontFamily="OpenSans"
-			                FontSize="17"
+			                FontSize="14"
 			                Text="Login"
 			                TextColor="{StaticResource BlackTextColor}"
 			                VerticalOptions="Center" 
@@ -119,7 +96,7 @@
 			                x:Name="LblPassword"
 			                FontAttributes="Bold"
 			                FontFamily="OpenSans"
-			                FontSize="17"
+			                FontSize="14"
                             HorizontalOptions="Start"
 			                Text="Password"
 			                TextColor="{StaticResource BlackTextColor}"
@@ -152,26 +129,22 @@
                             Grid.Row="2"
 			                Grid.Column="0"
                             Grid.ColumnSpan="3"
-                            HeightRequest="25"
+                            HeightRequest="25">
                             
-                            >
                             <Button
-                                
                                 x:Name="BtnPasswordLost"
                                 Clicked="BtnPasswordLost_Clicked"
                                 BackgroundColor="White"
                                 Text="Password Lost"
-                                TextColor="{StaticResource RedTextColor}"
-                              
-                                >
-                                      
+                                TextColor="{StaticResource RedTextColor}">   
                             </Button>
                         </StackLayout>
+                        
                         <Label
 			                x:Name="LblLanguage"
                             FontAttributes="Bold"
 			                FontFamily="OpenSans"
-			                FontSize="17"
+			                FontSize="14"
                             WidthRequest="200"
 			                HorizontalOptions="Start"
 			                Text="Language"
@@ -187,6 +160,7 @@
 			                Title="Language"
 			                HorizontalOptions="EndAndExpand"
 			                VerticalOptions="Center"
+                            
                             WidthRequest="200"
 			                ItemsSource="{Binding Languages}"
 			                ItemDisplayBinding="{Binding Name}"
@@ -211,8 +185,6 @@
 			                    Grid.Column="0" 
                                 Grid.ColumnSpan="3"
                                 HorizontalOptions="Center"
-                            Margin="70,0,0,0"
-                               
                                 />
                     </Grid>
                     
@@ -237,7 +209,7 @@
                         </Grid.ColumnDefinitions>
                         
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="40"/>
                             <RowDefinition Height="2"/>
                         </Grid.RowDefinitions>
                         <BoxView x:Name="SelectedMenu" BackgroundColor="{StaticResource RedTextColor}"
@@ -256,10 +228,12 @@
                                         />
                         <Button x:Name="BtnComm"
                             Image="Chat.png"
+                                ContentLayout="Left,0"
                             Grid.Row="0"
                             Grid.Column="1"
                             BackgroundColor="White"
                             BorderColor="White"
+                                Text="{Binding  NewComCount,StringFormat='({0})'}"
                             Clicked="BtnComm_Clicked"
                                         />
                         <Button x:Name="BtnHelp"
@@ -286,7 +260,7 @@
             </AbsoluteLayout >
             <StackLayout 
                 VerticalOptions="End"
-                 Margin="0,0,0,10"
+                 Margin="0,0,0,25"
                   AbsoluteLayout.LayoutBounds="0.5,1"
                   AbsoluteLayout.LayoutFlags="PositionProportional"
                 >
@@ -297,6 +271,7 @@
                     BorderRadius="50"
                     HeightRequest="100"
                     BorderWidth="1"
+                    BorderColor="Transparent"
                     MinimumHeightRequest="100"
                     WidthRequest="100"
                     MinimumWidthRequest="100"

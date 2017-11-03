@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Structure.Data;
 using Structure.Model;
 using Structure.Utils;
 using Structure.View;
@@ -24,20 +25,23 @@ namespace Structure.ViewModel
         static readonly string requestUri = string.Concat(Constants.GetCommunicationrequestUri, "6FDFDD074B4BD30209085207575E5D0D");
         static System.Net.NetworkCredential credentials = new System.Net.NetworkCredential { UserName = Constants.ApiUserName, Password = Constants.ApiPassword };
         #endregion
+
+        public DatabaseAccess   DatabaseAccess { get; set; }
+
         Command<string> sendMessageCommand => new Command<string>(async (msg) => await SendMessageAsync(msg), CanSendMessage);
         public Command<string> SendMessage => sendMessageCommand;
 
         public MessagingPageViewModel()
-        {
+        {           
 
-            
             this.Messages = GlobalCommunicationDataSource.Messages;
         }
 
-        public  async Task loadCommunication()
+        public  async Task<ObservableCollection<Communication>> loadCommunication()
         {
          
            this. Messages = await getListCommunication();
+            return this.Messages;
            
         }
 
@@ -65,7 +69,7 @@ namespace Structure.ViewModel
                 messageText = value;
                 OnPropertyChanged();
 
-              //  sendMessageCommand.ChangeCanExecute();
+             
             }
         }
         //public bool IsConnected=>clien
@@ -97,11 +101,12 @@ namespace Structure.ViewModel
             
         }
 
-        //TO-DO: Wait POST Message API
+        //Send the message to the API
         private async Task SendMessageAsync(string message)
         {
             try
             {
+
                 var msg = new 
                 {
                     ClientKey = "6FDFDD074B4BD30209085207575E5D0D",
@@ -112,7 +117,7 @@ namespace Structure.ViewModel
                 var postUri = Constants.PostCommunication;
                 var handler = new HttpClientHandler { Credentials = credentials };
                 var client = new HttpClient(handler);
-                var json = JsonConvert.SerializeObject(msg);
+               
                 var data =new StringContent( JsonConvert.SerializeObject(msg),Encoding.UTF8,"application/json");
                
                
@@ -125,7 +130,16 @@ namespace Structure.ViewModel
 
             }
             catch(Exception e)
-            {           
+            {
+                DatabaseAccess data = new DatabaseAccess();
+                data.CreateException(new StructureExceptionModel
+                {
+                    Message = e.Message,
+                    MethodName = e.Source,
+                    StackTrace = e.StackTrace,
+                    TimeSpan = DateTime.Today.ToString(System.Globalization.CultureInfo.CurrentCulture)
+
+                });
             }
            
            

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Structure.Interface;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,11 +11,12 @@ using Xamarin.Forms;
 
 namespace Structure.ViewModel
 {
-   public class NotificationCommunicationViewModel:ObservableCollection<Notification>
+   public class NotificationCommunicationViewModel:ObservableCollection<Notification>,IPageNotification
     {
        
         private bool _expanded;
-        
+        private int _count=0;
+
         public string Title { get; set; }
         public string ShortTitle { get; set; }
         public bool Expanded
@@ -61,7 +63,23 @@ namespace Structure.ViewModel
             this.Title = title;
             this.ShortTitle = shortTitle;
         }
+        public NotificationCommunicationViewModel()
+        {
+
+        }
         
-       
+       public int NewComCount
+        {
+            get { return _count; }
+
+            set
+            {
+             if(_count!=value)
+                {
+                    _count = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(NewComCount)));
+                }
+            }
+        }
     }
 }

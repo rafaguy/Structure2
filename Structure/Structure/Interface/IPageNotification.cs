@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Structure.Interface
 {
-    public interface IFileOpener
+    public interface IPageNotification
     {
-      Task OpenFile(string filePath);
+         int NewComCount { get; set; }
     }
 }

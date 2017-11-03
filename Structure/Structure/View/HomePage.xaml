@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Structure.Utils"
@@ -39,7 +39,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="40"/>
                             <RowDefinition Height="2"/>
                         </Grid.RowDefinitions>
                        
@@ -54,11 +54,13 @@
                                         />
                         <Button x:Name="BtnComm"
                             Image="Chat.png"
+                                ContentLayout="Left,0"
                             Grid.Row="0"
                             Grid.Column="1"
                             BackgroundColor="White"
                             BorderColor="White"
                             Clicked="BtnComm_Clicked"
+                                Text="{Binding NewComCount,StringFormat='({0})'}"
                                         />
                         <Button x:Name="BtnHelp"
                             Image="I.png"
@@ -81,7 +83,7 @@
                 </StackLayout>
                 <StackLayout 
                 VerticalOptions="End"
-                 Margin="0,0,0,10"
+                 Margin="0,0,0,25"
                   AbsoluteLayout.LayoutBounds="0.5,1"
                   AbsoluteLayout.LayoutFlags="PositionProportional"
                 >
@@ -90,6 +92,7 @@
                     BackgroundColor="White"
                     Image="Home_Selected.png"
                     BorderRadius="50"
+                    BorderColor="Transparent"
                     HeightRequest="100"
                     BorderWidth="1"
                     MinimumHeightRequest="100"

@@ -8,6 +8,7 @@ using UIKit;
 using Structure.Interface;
 using Xamarin.Forms;
 using Structure.iOS.Implementation;
+using System.Threading.Tasks;
 
 [assembly: Dependency(typeof(FileOpener))]
 
@@ -16,47 +17,10 @@ namespace Structure.iOS.Implementation
     public class FileOpener : IFileOpener
     {
 
-        public void OpenFile(string fullPath)
+        public Task OpenFile(string fullPath)
         {
-            try
-            {
-                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-                {
-
-                    //
-                    // This is a trick. Here we are trying to get the navigation renderer to get the navigationcontroller from it.
-                    //
-
-                    var firstController = UIApplication.SharedApplication.KeyWindow.RootViewController.ChildViewControllers.First().ChildViewControllers.Last().ChildViewControllers.First();
-
-                    var navcontroller = firstController as UINavigationController;
-
-                    var uidic = UIDocumentInteractionController.FromUrl(new NSUrl(fullPath, true));
-
-                    uidic.Delegate = new DocInteractionC(navcontroller);
-
-                    uidic.PresentPreview(true);
-
-                });
-
-            }
-            catch (Exception e)
-            {
-
-                throw e;
-
-            }
-            finally
-            {
-
-                //
-                // Close the original stream.
-                //
-
-                // fileStream.Close();
-
-            }
-
+            return null;
+          
         }
 
         public class DocInteractionC : UIDocumentInteractionControllerDelegate

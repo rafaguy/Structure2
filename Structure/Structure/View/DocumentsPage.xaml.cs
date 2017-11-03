@@ -3,6 +3,7 @@ using Structure.Data;
 using Structure.Interface;
 using Structure.Model;
 using Structure.Service;
+using Structure.Utils;
 using Structure.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Structure.View
         public DatabaseAccess DatabaseAccess { get; set; }
         public DocumentService DocumentService { get; set; }
 
-        readonly MainViewModel _mainViewModel = new MainViewModel();
+        readonly MainViewModel _mainViewModel = new MainViewModel {  NewComCount=GlobalCommunicationDataSource.CurrentNewComNumber};
         public DocumentsPage ()
 		{
             DatabaseAccess = new DatabaseAccess();
@@ -109,7 +110,36 @@ namespace Structure.View
 
         #region DocumentService
 
-       
+        public async Task<bool> SaveDocumentToDB()
+        {
+            List<Document> docsToAdd = new List<Document>();
+            try
+            {
+                var clientKey = DatabaseAccess.GetClientKey();
+                var documentList = await DocumentService.GetDocuments(clientKey);
+                foreach (var item in documentList)
+                {
+                    var filePath = await DependencyService.Get<IFileMgr>().Base64ToFile(item.Data, item.Name, item.Extension);
+                    var position = DependencyService.Get<ILocationService>().GetLocation();
+                    item.FilePath = filePath;
+            
+
+                    docsToAdd.Add(item);
+                }
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+         
+
+            DatabaseAccess.CreateManyDocuments(docsToAdd);
+            return true;
+
+        }
+
         #endregion
 
         #region Footer Navigations

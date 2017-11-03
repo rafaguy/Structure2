@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using Structure.Interface;
 using Structure.Model;
+using Structure.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Structure.Data
             _con = Xamarin.Forms.DependencyService.Get<ISqLiteDb>().GetConnection();
             _con.CreateTable<LanguageModel>();
             _con.CreateTable<ConfigurationModel>();
-           
+            _con.CreateTable<StructureExceptionModel>();
             _con.CreateTable<Document>();
         }
 
@@ -50,9 +51,9 @@ namespace Structure.Data
             return _con.Insert(document);
         }
 
-        public Document ReadDocument(string id)
+        public Document ReadDocument(int id)
         {
-            return _con.Table<Document>().SingleOrDefault(x => x.IdMobile == id);
+            return _con.Table<Document>().SingleOrDefault(x => x.Id == id);
         }
 
         public int CreateManyDocuments(IEnumerable<Document> documents)
@@ -67,17 +68,13 @@ namespace Structure.Data
             var tempDoc = ReadTempDocument().ToList();
 
             //compare name and validity
-          //  var validatedPhoto = documents.Where(x => x.Validated && tempDoc.Contains(x)).ToList();
-
-            var tempValidated = tempDoc.Where(x => documents.Any(y => y.IdMobile == x.IdMobile && y.Validated)).ToList();
-
             foreach (var item in tempDoc)
             {
                 var validated = documents.SingleOrDefault(x => x.Name == item.Name && x.Validated );
                 //Assign Values
                 if (validated != null)
                 {
-                    DeleteTempDocument(item);
+                    DeleteDocument(item);
 
                 }
             }
@@ -99,15 +96,19 @@ namespace Structure.Data
 
         public IEnumerable<Document> ReadTempDocument()
         {
-            return _con.Table<Document>().Where(x => x.Type == "Temporary");
+            var cultureInfo = GetCultureInfo();
+            var temp = Localize.GetString(Constants.Temporary, cultureInfo);
+            return _con.Table<Document>().Where(x => x.Type == temp );
         }
 
         public int DeleteApiDocuments()
         {
-            return _con.Execute("DELETE FROM Document WHERE Type !='Temporary'");
+            var cultureInfo = GetCultureInfo();
+            var temp = Localize.GetString(Constants.Temporary, cultureInfo);
+            return _con.Execute("DELETE FROM Document WHERE Type != '"+ temp +"'");
         }
 
-        public int DeleteTempDocument(Document document)
+        public int DeleteDocument(Document document)
         {
             return _con.Delete(document);
         }
@@ -118,24 +119,11 @@ namespace Structure.Data
         public int CreateConfiguration(ConfigurationModel configuration)
         {
             _con.Execute("Delete From ConfigurationModel");
-            //var dbConfig = _con.Table<ConfigurationModel>().ToList().SingleOrDefault(x => x.ClientKey == configuration.ClientKey);
-           /* if (dbConfig != null)
-            {
-                dbConfig.Language = configuration.Language;
-                dbConfig.Login = configuration.Login;
-                dbConfig.Pwd = configuration.Pwd;
-                dbConfig.Logo = configuration.Logo;
-                dbConfig.Name = configuration.Name;
-                dbConfig.Surname = configuration.Surname;
-
-                return UpdateOneConfigurations(dbConfig);
-
-            }
-            else */
-            {
+         
+            
                 return _con.Insert(configuration);
 
-            }
+            
         }
 
         public ConfigurationModel ReadOneConfiguration()
@@ -175,13 +163,29 @@ namespace Structure.Data
                 return _con.Table<ConfigurationModel>().SingleOrDefault(x => x != null).ClientKey;
 
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
 
+                DatabaseAccess data = new DatabaseAccess();
+                data.CreateException(new StructureExceptionModel
+                {
+                    Message = e.Message,
+                    MethodName = e.Source,
+                    StackTrace = e.StackTrace,
+                    TimeSpan = DateTime.Today.ToString(System.Globalization.CultureInfo.CurrentCulture)
+
+                });
                 return null;
             }
         }
 
+        #endregion
+
+        #region Exception
+        public void CreateException(StructureExceptionModel exception)
+        {
+            _con.Insert(exception);
+        }
         #endregion
     }
 }

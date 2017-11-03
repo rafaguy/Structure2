@@ -24,6 +24,7 @@ namespace Structure.iOS.CustomRenderer
             attr.DocumentType = NSDocumentType.HTML;
             var HtmlData = NSData.FromString(Element.Text, NSStringEncoding.Unicode);
             Control.AttributedText = new NSAttributedString(HtmlData,attr, ref nsError);
+            
         }
     }
 }

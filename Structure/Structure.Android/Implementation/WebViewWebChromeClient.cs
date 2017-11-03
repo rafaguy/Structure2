@@ -14,6 +14,8 @@ using Android.Provider;
 using Android.Support.V4.App;
 using Plugin.CurrentActivity;
 using Android.Content.PM;
+using Plugin.Permissions;
+using System.Threading.Tasks;
 
 namespace Structure.Droid.Implementation
 {
@@ -23,8 +25,13 @@ namespace Structure.Droid.Implementation
         public static IValueCallback valueCallback;
         public override void OnPermissionRequest(PermissionRequest request)
         {
-            base.OnPermissionRequest(request);
-            request.Grant(request.GetResources());
+          
+              var res = request.GetResources();
+            var orig = request.Origin;
+
+           CrossCurrentActivity.Current.Activity.RunOnUiThread(() => request.Grant(res));
+          
+          
         }
 
         public void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
@@ -47,7 +54,7 @@ namespace Structure.Droid.Implementation
             SelectionContentIntent.PutExtra(Intent.ExtraAllowMultiple, true);
             SelectionContentIntent.SetType("image/*");
 
-           Intent[]  intentArray = new Intent[] { TakePictureIntent };
+            Intent[]  intentArray = new Intent[] { TakePictureIntent };
 
             Intent chooserIntent = new Intent(Intent.ActionChooser);
             chooserIntent.PutExtra(Intent.ExtraIntent, SelectionContentIntent);

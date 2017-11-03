@@ -7,15 +7,17 @@ using Xamarin.Forms;
 using Android.Support.V4.App;
 using Plugin.CurrentActivity;
 using Plugin.Permissions;
+using System.Threading.Tasks;
+using Structure.Utils;
 
 [assembly: Dependency(typeof(FileOpener))]
 namespace Structure.Droid.Implementation
 {
     public class FileOpener : IFileOpener
     {
-        public async void OpenFile(string filePath)
+        public async Task OpenFile(string filePath)
         {
-            Android.Net.Uri uri = Android.Net.Uri.Parse("file:///" + filePath);
+            Android.Net.Uri uri = Android.Net.Uri.Parse(Constants.FilePathAndroid + filePath);
             Intent fileIntent = new Intent(Intent.ActionView);
             fileIntent.SetDataAndType(uri, "application/*");
             fileIntent.SetFlags(ActivityFlags.NoHistory);
@@ -25,7 +27,7 @@ namespace Structure.Droid.Implementation
             {
                Forms.Context.StartActivity(intent);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 Toast.MakeText(Xamarin.Forms.Forms.Context, "No Application Available to View PDF", ToastLength.Short).Show();
             }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage Title="Structure" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
@@ -10,7 +10,7 @@
     </ContentPage.Padding>
 
     <ContentPage.Content>
-        <AbsoluteLayout x:Name="AddDocumentPageLayout" BackgroundColor="White" >
+        <AbsoluteLayout x:Name="AddDocumentPageLayout" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="White" >
 
             <!--Header-->
             <StackLayout>
@@ -50,38 +50,51 @@
 
               <StackLayout x:Name="SubContent">
         
-                    <StackLayout Margin="0,0,0,17">
+                    <StackLayout Margin="0,5,0,5">
 
-                        <StackLayout  HeightRequest="200" WidthRequest="300" HorizontalOptions="Center">
+                            <StackLayout  HorizontalOptions="Center" HeightRequest="200" WidthRequest="300">
                             <cv:CarouselView  x:Name="MyCarousel" Position="{Binding Position}" ItemsSource="{Binding CarouselList}">
                                 <cv:CarouselView.ItemTemplate >
                                     <DataTemplate>
                                         <Grid>
-                                            <Image Aspect="AspectFill" Source="{Binding FilePath}" BackgroundColor="Gray"/>
+                                            <Image Aspect="AspectFit" Source="{Binding FilePath}" BackgroundColor="Gray"/>
                                         </Grid>
                                     </DataTemplate>
                                 </cv:CarouselView.ItemTemplate>
                             </cv:CarouselView>
                             <local:CarouselIndicators IndicatorHeight="10" IndicatorWidth="10" />
                         </StackLayout>
-                        <StackLayout Orientation="Vertical" Padding="0,0,0,22">
-                            <local:CarouselEntry 
-						        x:Name="MyEntry" BackgroundColor="{StaticResource GrayBackground}" 
-						        Position="{Binding Position}" 
-						        TextSource="Comments" 
-						        ItemsSource="{Binding CarouselList}"
-                                WidthRequest="300"
-                            ></local:CarouselEntry>
-
-                            <Image
-                                Source="DeleteRed.png"
-                                HeightRequest="25"
-                                WidthRequest="25"
-                                HorizontalOptions="End"
-                            />
+                        <StackLayout Orientation="Vertical" Padding="0,0,0,5">
+                            
                         </StackLayout>
-                        
 
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="25"/>
+                                </Grid.ColumnDefinitions>
+                                <local:CarouselEntry 
+						                x:Name="MyEntry" BackgroundColor="{StaticResource GrayBackground}" 
+						                Position="{Binding Position}" 
+						                TextSource="Comments" 
+						                ItemsSource="{Binding CarouselList}"
+                                        WidthRequest="300"
+                                        
+                                        Grid.Column="0"
+                                        Grid.Row="0"
+                                    />
+
+                                <Button
+                                        Image="DeleteRed.png"
+                                        HeightRequest="25"
+                                        WidthRequest="25"
+                                        Grid.Column="1"
+                                        Grid.Row="0"
+                                        Clicked="BtnDeletePhoto_Clicked"
+                                        VerticalOptions="Center"
+                                    />
+                            </Grid>
                        
                         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
 
@@ -125,7 +138,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="2"/>
                     </Grid.RowDefinitions>
                     <BoxView x:Name="SelectedMenu" BackgroundColor="{StaticResource RedTextColor}"
@@ -147,6 +160,7 @@
                             Grid.Column="1"
                             BackgroundColor="White"
                             BorderColor="White"
+                            Text="{Binding NewComCount,StringFormat='({0})'}"
                             Clicked="BtnComm_Clicked"
                                         />
                     <Button x:Name="BtnHelp"
@@ -170,7 +184,7 @@
             </StackLayout>
             <StackLayout 
                 VerticalOptions="End"
-                 Margin="0,0,0,10"
+                 Margin="0,0,0,25"
                   AbsoluteLayout.LayoutBounds="0.5,1"
                   AbsoluteLayout.LayoutFlags="PositionProportional"
                 >
@@ -181,6 +195,7 @@
                     BorderRadius="50"
                     HeightRequest="100"
                     BorderWidth="1"
+                    BorderColor = "Transparent"
                     MinimumHeightRequest="100"
                     WidthRequest="100"
                     MinimumWidthRequest="100"
@@ -206,7 +221,7 @@
                     Image="add.png"
                     BackgroundColor="White"
                     HorizontalOptions="CenterAndExpand"
-                    AbsoluteLayout.LayoutBounds="0.5,0.5,100,100"
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,150,150"
                     AbsoluteLayout.LayoutFlags="PositionProportional"
                     Clicked="BtnTakePhoto_Clicked"
                 />

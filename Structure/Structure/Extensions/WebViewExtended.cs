@@ -9,7 +9,7 @@ namespace Structure.Extensions
 {
   public  class WebViewExtended: WebView
     {
-        public WebViewExtended():base()
+        public WebViewExtended()
         {
            
         }

@@ -8,6 +8,9 @@ namespace Structure.Utils
     /// <seealso cref="Xamarin.Forms.Picker" />
     public class BorderlessPicker : Picker
     {
-
+        public BorderlessPicker()
+        {
+           
+        }
     }
 }

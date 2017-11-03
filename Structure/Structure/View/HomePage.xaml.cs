@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Structure.Utils;
+using Structure.ViewModel;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,6 +13,12 @@ namespace Structure.View
 		{
            
 			InitializeComponent ();
+            BindingContext = new HomeViewModel
+            {
+                NewComCount = GlobalCommunicationDataSource.CurrentNewComNumber
+            };
+
+            
 		}
 
      

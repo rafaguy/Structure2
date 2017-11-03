@@ -30,7 +30,7 @@ namespace Structure.View
 
         #endregion
 
-        public ConfigurationPageViewModel ConfigurationViewModel { get; set; } = new ConfigurationPageViewModel();
+        public ConfigurationPageViewModel ConfigurationViewModel { get; set; } = new ConfigurationPageViewModel { NewComCount=GlobalCommunicationDataSource.CurrentNewComNumber};
         public DatabaseAccess DatabaseAccess { get; set; }
 
         public LoginService LoginService { get; set; }
@@ -69,7 +69,7 @@ namespace Structure.View
                 
                 TxtUsername.Text = configExist.Login;
                 TxtPassword.Text = configExist.Pwd;
-                LanguagePicker.SelectedItem = configExist.Language;
+                LanguagePicker.SelectedIndex = configExist.LanguageId;
                 FooterDisable(false);
             }
 
@@ -141,31 +141,39 @@ namespace Structure.View
         {
 
             var language = LanguagePicker.SelectedItem as LanguageModel;
-            if (CheckNetwork() && language != null )
+            if (CheckNetwork())
             {
-                ResetLayout(false);
-
-                string login = TxtUsername.Text;
-                string pwrd = TxtPassword.Text;
-                string lang = CultureInfo;
-
-                DatabaseAccess.SaveDefaultLanguage(language);
-                SetLanguage();
-      
-                var clientKey = await AuthentifyLogin(login, pwrd,lang );
-                if (clientKey != "KO")
+                if (language != null)
                 {
-                    ResetLayout(true);
-                    //save config to db
-                    DatabaseAccess.CreateConfiguration(new ConfigurationModel {ClientKey =clientKey,Language= lang,Login = login,Pwd = pwrd, });
+                    ResetLayout(false);
 
-                    await Navigation.PushAsync(new HomePage());
+                    string login = TxtUsername.Text;
+                    string pwrd = TxtPassword.Text;
+                    string lang = CultureInfo;
+                    int langIndex = LanguagePicker.SelectedIndex;
+                    DatabaseAccess.SaveDefaultLanguage(language);
+                    SetLanguage();
+
+                    var clientKey = await AuthentifyLogin(login, pwrd, lang);
+                    if (clientKey != "KO")
+                    {
+                        ResetLayout(true);
+                        //save config to db
+                        DatabaseAccess.CreateConfiguration(new ConfigurationModel { ClientKey = clientKey, Language = lang, Login = login, Pwd = pwrd, LanguageId = langIndex });
+
+                        await Navigation.PushAsync(new HomePage());
+                    }
+                    else
+                    {
+                        ResetLayout(true);
+                        await DisplayAlert(_loginError, _loginMsg, _ok);
+                    }
                 }
                 else
                 {
-                    ResetLayout(true);
                     await DisplayAlert(_loginError, _loginMsg, _ok);
                 }
+               
             }
             else
             {

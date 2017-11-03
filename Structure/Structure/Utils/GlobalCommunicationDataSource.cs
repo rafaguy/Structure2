@@ -17,5 +17,14 @@ namespace Structure.Utils
             set;           
         }
         public static ObservableCollection<NotificationCommunicationViewModel> Notification { get; set; }
+        public static int CommunicationNumberViewed { get; set; }
+        public static int CommunicationNumberNotViewed { get; set; }
+        public static int CurrentNewComNumber
+        {
+            get
+            {
+                return CommunicationNumberNotViewed - CommunicationNumberViewed;
+            }
+        }
     }
 }

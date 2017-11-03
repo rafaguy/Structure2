@@ -1,16 +1,32 @@
-﻿using Structure.Model;
+﻿using Structure.Interface;
+using Structure.Model;
 using System.Collections.ObjectModel;
 
 
 namespace Structure.ViewModel
 {
-    public class ConfigurationPageViewModel :BaseViewModel
+    public class ConfigurationPageViewModel :BaseViewModel,IPageNotification
     {
         private ObservableCollection<LanguageModel> _languages;
+        private int _count;
+
         public ObservableCollection<LanguageModel> Languages
         {
             get { return _languages; }
             set { SetValue(ref _languages, value); }
+        }
+
+        public int NewComCount {
+            get {
+                return _count;
+            }set {
+                if(_count!=value)
+                {
+                    _count = value;
+                    OnPropertyChanged();
+                }
+
+            }
         }
 
         public ConfigurationPageViewModel()

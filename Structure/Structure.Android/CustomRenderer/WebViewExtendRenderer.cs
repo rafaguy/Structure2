@@ -22,26 +22,23 @@ using static Android.Webkit.WebSettings;
 [assembly: ExportRenderer(typeof(WebViewExtended),typeof(WebViewExtendRenderer))]
 namespace Structure.Droid.CustomRenderer
 {
-   public class WebViewExtendRenderer: ViewRenderer<WebViewExtended,Android.Webkit.WebView>
+   public class WebViewExtendRenderer: WebViewRenderer
     {
 
         /// <summary>
         /// Raises the <see cref="E:ElementChanged" /> event.
         /// </summary>
         /// <param name="e">The <see cref="ElementChangedEventArgs{WebViewExtended}"/> instance containing the event data.</param>
-        protected override void OnElementChanged(ElementChangedEventArgs<WebViewExtended> e)
+        /// 
+        protected override void OnElementChanged(ElementChangedEventArgs<WebView> e)
         {
             base.OnElementChanged(e);
-            if(Control==null)
-            {
-                SetNativeControl(new Android.Webkit.WebView(Context));
-            }
-            if(e.NewElement!=null)
+            if (e.NewElement != null)
             {
                 SettingWebView();
             }
         }
-
+     
         /// <summary>
         /// Settings the web view.
         /// </summary>
@@ -54,8 +51,12 @@ namespace Structure.Droid.CustomRenderer
             Control.Settings.SetPluginState(PluginState.On);
             Control.SetWebViewClient(new Android.Webkit.WebViewClient());
             Control.SetWebChromeClient(new WebViewWebChromeClient());
-          
-           var url = "http://192.168.20.76";
+            Control.Settings.JavaScriptCanOpenWindowsAutomatically = true;
+            Control.Settings.DomStorageEnabled = true;
+            Control.Settings.SupportZoom();
+
+             var url = "https://appear.in/ags-paris01";
+           
             Control.LoadUrl(url);
          
         }

@@ -19,7 +19,7 @@ namespace Structure.Utils
         /// </summary>
         public CarouselEntry()
         {
-            _editor = new Editor() { HeightRequest = 100 , WidthRequest =1000 ,BackgroundColor = Color.Gray};
+            _editor = new Editor() { HeightRequest = 100 , WidthRequest =1000 , Keyboard= Keyboard.Text, BackgroundColor = Color.LightGray, TextColor = Color.Black , Text = "Comment"};
             this.HorizontalOptions = LayoutOptions.CenterAndExpand;
                 this.Children.Add(_editor);
         }

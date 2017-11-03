@@ -11,5 +11,6 @@
         public string Language { get; set; }
         public string ClientKey { get; set; }
         public string Logo { get; set; }
+        public int LanguageId { get; set; }
     }
 }

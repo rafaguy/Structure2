@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="addDocument" xml:space="preserve">
+    <value />
+  </data>
+  <data name="addMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="communication" xml:space="preserve">
+    <value />
+  </data>
   <data name="configuration" xml:space="preserve">
     <value>CONFIGURATIE</value>
+  </data>
+  <data name="document" xml:space="preserve">
+    <value />
   </data>
   <data name="ko" xml:space="preserve">
     <value>ko</value>
@@ -141,6 +153,12 @@
   <data name="netNotAvailable" xml:space="preserve">
     <value>Netwerk niet beschikbaar</value>
   </data>
+  <data name="noPhoto" xml:space="preserve">
+    <value />
+  </data>
+  <data name="notification" xml:space="preserve">
+    <value />
+  </data>
   <data name="ok" xml:space="preserve">
     <value>ok</value>
   </data>
@@ -152,5 +170,11 @@
   </data>
   <data name="save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="takePhoto" xml:space="preserve">
+    <value />
+  </data>
+  <data name="temporary" xml:space="preserve">
+    <value />
   </data>
 </root>

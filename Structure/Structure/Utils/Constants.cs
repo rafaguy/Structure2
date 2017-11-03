@@ -36,8 +36,12 @@
         #endregion
 
         #region ApiUri
-        
-       public const string GetCommunicationrequestUri = @"https://api-tray.intragest.info/api/MobileGetListComms?ClientKey=";
+
+        public const string TrayBaseUri = @"https://api-tray.intragest.info/api/";
+        public const string PostDocument = "MobilePostDocument";
+        public const string PostLocation = "MobilePostLocalisation";
+
+        public const string GetCommunicationrequestUri = @"https://api-tray.intragest.info/api/MobileGetListComms?ClientKey=";
         public const string GetListNotificationrequestUri = @"https://api-tray.intragest.info/api/MobileGetListNotifs?ClientKey=";
         public const string PostCommunication = @"https://api-tray.intragest.info/api/MobilePostCommunication";
         #endregion
@@ -50,6 +54,12 @@
 
         #region Documents
         public const string Temporary = "temporary";
+        public const string NoPhoto = "noPhoto";
+        public const string TakePhoto = "takePhoto";
+        #endregion
+
+        #region Files
+        public const string FilePathAndroid = @"file:///";
         #endregion
     }
 }

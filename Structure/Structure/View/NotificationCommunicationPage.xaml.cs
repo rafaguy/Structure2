@@ -24,8 +24,10 @@ namespace Structure.View
         public  NotificationCommunicationPage()
         {
             InitializeComponent();
+            BindingContext = new NotificationCommunicationViewModel {  NewComCount=GlobalCommunicationDataSource.CurrentNewComNumber};
             _notification = GlobalCommunicationDataSource.Notification;
             UpdateList();
+          
         }
 
         protected override async void OnAppearing()
@@ -36,8 +38,14 @@ namespace Structure.View
                 activityIndicator.IsRunning = true;
                 // base.OnAppearing();
                 this._notification = await getListNotification();
+                GlobalCommunicationDataSource.Notification = this._notification;
                 activityIndicator.IsVisible = false;
                 activityIndicator.IsRunning = false;
+                UpdateList();
+            }
+            if(GlobalCommunicationDataSource.Notification!=this._notification)
+            {
+                this._notification = GlobalCommunicationDataSource.Notification;
                 UpdateList();
             }
 
@@ -112,7 +120,7 @@ namespace Structure.View
                 }
                 //Get lists of Communication from the API
                 json = await client.GetStringAsync(requestUriListCommunication);
-                var communicationLists = JsonConvert.DeserializeObject<List<Model.Communication>>(json);
+                var communicationLists = JsonConvert.DeserializeObject<List<Model.Communication>>(json).Where(x=>x.Position.Equals("L"));
                 foreach (var notif in communicationLists)
                 {
                     communicationGroup.Add(new Notification { NotificationText = notif.Auteur,Date= notif.Date });
