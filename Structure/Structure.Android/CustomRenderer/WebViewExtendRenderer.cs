@@ -55,7 +55,8 @@ namespace Structure.Droid.CustomRenderer
             Control.Settings.DomStorageEnabled = true;
             Control.Settings.SupportZoom();
 
-             var url = "https://appear.in/ags-paris01";
+            //  var url = "https://appear.in/ags-paris01";
+            var url = "https://m.facebook.com";
            
             Control.LoadUrl(url);
          

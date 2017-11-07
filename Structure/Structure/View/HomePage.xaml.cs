@@ -1,4 +1,5 @@
-﻿using Structure.Utils;
+﻿using Structure.Data;
+using Structure.Utils;
 using Structure.ViewModel;
 using System;
 using Xamarin.Forms;
@@ -6,22 +7,31 @@ using Xamarin.Forms.Xaml;
 
 namespace Structure.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class HomePage : ContentPage
-	{
-		public HomePage ()
-		{
-           
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class HomePage : ContentPage
+    {
+        public DatabaseAccess DatabaseAccess { get; set; }
+        public HomePage()
+        {
+            DatabaseAccess = new DatabaseAccess();
+            InitializeComponent();
+            SetHomeURI();
             BindingContext = new HomeViewModel
             {
                 NewComCount = GlobalCommunicationDataSource.CurrentNewComNumber
             };
 
-            
-		}
 
-     
+        }
+
+        public void SetHomeURI()
+        {
+           /* string clientKey = DatabaseAccess.GetClientKey();
+            string cultureInfo = DatabaseAccess.GetCultureInfo();
+            string URI = Constants.HomeURI + clientKey + "&langueinit=" + cultureInfo;
+            HomeWebView.Source = URI;*/
+        }
+
         private void ArrowBack_Clicked(object sender, EventArgs e)
         {
             Navigation.PopAsync();

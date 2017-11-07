@@ -227,15 +227,21 @@
                         Clicked="BtnDoc_Clicked"
                                         />
                         <Button x:Name="BtnComm"
-                            Image="Chat.png"
-                                ContentLayout="Left,0"
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            BackgroundColor="White"
-                            BorderColor="White"
-                                Text="{Binding  NewComCount,StringFormat='({0})'}"
-                            Clicked="BtnComm_Clicked"
-                                        />
+                        Image="Chat.png"
+                        ContentLayout="Left,0"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        BackgroundColor="White"
+                        BorderColor="White"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                        AbsoluteLayout.LayoutFlags="All"
+                        Text="{Binding  NewComCount,StringFormat='({0})'}"
+                        Clicked="BtnComm_Clicked"
+                         />
+                        <Image Source="Circle.png" AbsoluteLayout.LayoutBounds="1,0,1,1" AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+                      
+                       
                         <Button x:Name="BtnHelp"
                             Image="I.png"
                             Grid.Row="0"

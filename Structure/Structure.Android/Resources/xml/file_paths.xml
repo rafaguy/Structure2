@@ -2,4 +2,5 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
   <external-path name="my_images" path="files/Pictures" />
   <external-path name="my_movies" path="files/Movies" />
+  <external-path name="my_webview_image" path="Android/data/Structure.Android/files/Pictures"/>
 </paths>

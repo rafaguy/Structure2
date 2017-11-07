@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" viewBox="0 0 100 100">
+    <defs>
+        <circle id="a" cx="42" cy="42" r="42"/>
+        <filter id="b" width="104.8%" height="104.8%" x="-2.4%" y="-2.4%" filterUnits="objectBoundingBox">
+            <feGaussianBlur in="SourceAlpha" result="shadowBlurInner1" stdDeviation="1"/>
+            <feOffset dy="2" in="shadowBlurInner1" result="shadowOffsetInner1"/>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"/>
+            <feColorMatrix in="shadowInnerInner1" values="0 0 0 0 0.831372549 0 0 0 0 0.835294118 0 0 0 0 0.839215686 0 0 0 1 0"/>
+        </filter>
+        <circle id="d" cx="42" cy="42" r="35"/>
+        <filter id="c" width="167.1%" height="167.1%" x="-33.6%" y="-30.7%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="7.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.268399004 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="translate(8 6)">
+            <use fill="#FFF" xlink:href="#a"/>
+            <use fill="#000" filter="url(#b)" xlink:href="#a"/>
+        </g>
+        <g transform="translate(8 6)">
+            <use fill="#000" filter="url(#c)" xlink:href="#d"/>
+            <use fill="#FFF" xlink:href="#d"/>
+        </g>
+        <g fill="#BC0100" fill-rule="nonzero">
+            <path d="M60.894 44.965l3.7 2.925a.963.963 0 0 0 .568.183c.23 0 .485-.095.644-.28a.763.763 0 0 0-.087-1.1L51.557 35.18a.807.807 0 0 0-.51-.18h-.077a.815.815 0 0 0-.513.18L36.288 46.692a.765.765 0 0 0-.1 1.101c.16.185.389.28.619.28.183 0 .266-.06.417-.183l2.701-2.277v12.274c0 1.707 1.835 3.113 3.629 3.113H58.07c1.696 0 2.823-1.284 2.823-3.113V44.965zm-7.258 14.472h-6.049v-8.522c0-.417.958-.857 1.638-.857h3.862c.596 0 .549.294.549.857v8.522zm5.645-1.55c0 .835-.327 1.55-1.21 1.55h-2.823v-8.522c0-1.422-.681-2.42-2.16-2.42h-3.863c-1.478 0-3.251.945-3.251 2.42v8.522h-2.42c-.899 0-2.016-.709-2.016-1.55V44.345c0-.013.098-.026.097-.04l9.325-7.535 8.606 7.054c-.129.139-.285.32-.285.521v13.542z"/>
+        </g>
+    </g>
+</svg>

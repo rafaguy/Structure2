@@ -29,7 +29,7 @@ namespace Structure
         private bool UpdateListNotification()
         {
            Task.Run(async () => { GlobalCommunicationDataSource.Messages = await MessagingPageViewModel.getListCommunication();
-               GlobalCommunicationDataSource.CommunicationNumberNotViewed = GlobalCommunicationDataSource.Messages.Where(x => x.Position.Equals("L")).Count();
+               GlobalCommunicationDataSource.CommunicationNumberNotViewed = GlobalCommunicationDataSource.Messages.Count(x => x.Position.Equals("R"));
                Application.Current.Properties["NumberNotViewed"] = GlobalCommunicationDataSource.CommunicationNumberNotViewed;
                Application.Current.Properties["NumberViewed"] = GlobalCommunicationDataSource.CommunicationNumberViewed;
                if (GlobalCommunicationDataSource.CommunicationNumberNotViewed != GlobalCommunicationDataSource.CommunicationNumberViewed)

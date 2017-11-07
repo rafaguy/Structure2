@@ -356,6 +356,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Images\Circle.png" />
     <Content Include="Images\Download.png" />
     <EmbeddedResource Include="Images\executive.png" />
     <Content Include="Images\Files.png" />

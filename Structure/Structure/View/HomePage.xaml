@@ -23,7 +23,7 @@
                     />
             <!--Header End-->
             
-            <WebView  Source="https://www.google.com" HeightRequest="500">
+            <WebView x:Name="HomeWebView" HeightRequest="500">
 
             </WebView>
             <!--Footer Starts-->

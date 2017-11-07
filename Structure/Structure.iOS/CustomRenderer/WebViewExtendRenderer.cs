@@ -32,16 +32,7 @@ namespace Structure.iOS.CustomRenderer
             Control.LoadRequest(new NSUrlRequest(new NSUrl(url)));
 
         }
-        /* protected override void OnElementChanged(VisualElementChangedEventArgs e)
-         {
-             base.OnElementChanged(e);
-             ScalesPageToFit = true;
-             LoadRequest(new Foundation.NSUrlRequest(new NSUrl("https://appear.in/ags-paris01")));
-
-         }*/
-        /// <summary>
-        /// Settings the web view.
-        /// </summary>
+       
 
     }
 }

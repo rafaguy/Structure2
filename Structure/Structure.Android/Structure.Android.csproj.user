@@ -3,6 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>HUAWEI VNS-L21</SelectedDevice>
     <DefaultDevice>VisualStudio_android-23_arm_phone</DefaultDevice>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
 </Project>

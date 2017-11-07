@@ -23,10 +23,12 @@ namespace Structure.Droid.Implementation
         
     {
         public static IValueCallback valueCallback;
+        public static int PHOTO_REQUESTE_CODE =566; 
+        
         public override void OnPermissionRequest(PermissionRequest request)
         {
           
-              var res = request.GetResources();
+            var res = request.GetResources();
             var orig = request.Origin;
 
            CrossCurrentActivity.Current.Activity.RunOnUiThread(() => request.Grant(res));
@@ -41,27 +43,12 @@ namespace Structure.Droid.Implementation
         
         public override bool OnShowFileChooser(WebView webView, IValueCallback filePathCallback, FileChooserParams fileChooserParams)
         {
-            //return base.OnShowFileChooser(webView, filePathCallback, fileChooserParams);
-            var TakePictureIntent = new Intent(MediaStore.ActionImageCapture);
-
-          if(  TakePictureIntent.ResolveActivity(CrossCurrentActivity.Current.Activity.PackageManager) !=null)
-            {
-
-            }
             valueCallback = filePathCallback;
-            var SelectionContentIntent = new Intent(Intent.ActionGetContent);
-            SelectionContentIntent.AddCategory(Intent.CategoryOpenable);
-            SelectionContentIntent.PutExtra(Intent.ExtraAllowMultiple, true);
-            SelectionContentIntent.SetType("image/*");
 
-            Intent[]  intentArray = new Intent[] { TakePictureIntent };
-
-            Intent chooserIntent = new Intent(Intent.ActionChooser);
-            chooserIntent.PutExtra(Intent.ExtraIntent, SelectionContentIntent);
-            chooserIntent.PutExtra(Intent.ExtraTitle,"Image Chooser");
-            chooserIntent.PutExtra(Intent.ExtraInitialIntents, intentArray);
+           var intents= ImageHelper.CreateCaptureIntent(fileChooserParams);
+            
             ActivityCompat.StartActivityForResult(
-            CrossCurrentActivity.Current.Activity, Intent.CreateChooser(chooserIntent,"Select Image"),1,null);
+            CrossCurrentActivity.Current.Activity, Intent.CreateChooser(intents,"Select Image"), PHOTO_REQUESTE_CODE, null);
             return true;
         }
     }
